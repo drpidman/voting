@@ -1,0 +1,14 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1.2rem 1.5rem;
+    
+    color: #fff;
+    background-color: #1d1d1d;
+}
+
+.navbar.nav-item {
+    display: flex;
+    flex-direction: row;
+}
