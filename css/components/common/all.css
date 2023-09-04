@@ -1,3 +1,7 @@
+* {
+    margin: 0;
+}
+
 .container {
     position: relative;
 }
@@ -26,6 +30,14 @@
     justify-content: space-between;
 }
 
+.justify-end {
+    justify-content: flex-end;
+}
+
+.align-center {
+    align-items: center;
+}
+
 .pt-0\.5 {
     padding-top: .5rem !important;
 }
@@ -48,6 +60,14 @@
 
 .pt-3 {
     padding-top: 3rem !important;
+}
+
+.m-1 {
+    margin: 1rem !important;
+}
+
+.m-2 {
+    margin: 2rem !important;
 }
 
 .w-50 {
@@ -76,6 +96,7 @@
 
 .card {
     display: flex;
+    position: relative;
     flex-direction: column;
     border-radius: .5rem;
 }
