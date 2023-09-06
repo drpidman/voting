@@ -1,0 +1,6 @@
+Options -Indexes
+
+<Files ~ "\.(env)$">
+    Order Allow,Deny
+    Deny from All
+</Files>
