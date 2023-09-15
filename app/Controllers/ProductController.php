@@ -7,10 +7,21 @@ use App\Models\Product;
 use App\Models\ProductModel;
 use Symfony\Component\Routing\RouteCollection;
 
-class AddProductController
+session_start();
+
+class ProductController
 {
     public function postProduct(RouteCollection $routes)
     {
+        if (!isset($_SESSION['user'])) {
+            echo json_encode([
+                "status" => 401,
+                "message" => "Ação não autorizada"
+            ]);
+            http_response_code(401);
+            return;
+        }
+
         $products = new ProductModel();
         $product = new Product();
 
@@ -50,6 +61,51 @@ class AddProductController
         $products->new($product);
 
         echo json_encode($product);
+    }
+
+    public function deleteProduct(RouteCollection $routes)
+    {
+        if (!isset($_SESSION['user'])) {
+            echo json_encode([
+                "status" => 401,
+                "message" => "Ação não autorizada"
+            ]);
+            http_response_code(401);
+            return;
+        }
+
+        $products = new ProductModel();
+        $product = new Product();
+
+        if (!isset($_POST["product_name"])) {
+            echo json_encode([
+                "status" => 404,
+                "message" => "Nome do produto é requirido"
+            ]);
+            http_response_code(404);
+            return;
+        }
+
+        $product_name = $_POST["product_name"];
+
+        $product = $products->getByName($product_name);
+
+
+        if (!isset($product)) {
+            echo json_encode([
+                "status" => 404,
+                "message" => "Não foi possivel encontrar este produto"
+            ]);
+            http_response_code(404);
+            return;
+        }
+
+        $deleted_product = $products->delete($product);
+
+        echo json_encode([
+            "status" => 200,
+            "deleted" => $deleted_product
+        ]);
     }
 
     public function getProducts(RouteCollection $routes)

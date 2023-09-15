@@ -52,6 +52,24 @@ class ProductModel
         $conn->close();
     }
 
+    public function delete(Product $product)
+    {
+        $conn = $this->connect();
+
+        $sql =
+            "DELETE FROM products WHERE name = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $product->product_name);
+
+        if ($stmt->execute()) {
+            return $product;
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+
     public function getByName(String $product_name)
     {
         $conn = $this->connect();
@@ -78,8 +96,6 @@ class ProductModel
             $product->product_image = $image;
             $product->product_votes = $votes;
 
-            
-
             return $product;
         } else {
             return null;
@@ -89,7 +105,8 @@ class ProductModel
         $conn->close();
     }
 
-    public function getProducts() {
+    public function getProducts()
+    {
         $conn = $this->connect();
 
         $sql =

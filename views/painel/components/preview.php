@@ -1,5 +1,5 @@
 <section class="product-preview w-100 m-1">
-    <div class="card">
+    <div class="card preview">
         <div class="card top align-center">
             <section class="candidate-number">
                 <span id="candidate-number">1</span>

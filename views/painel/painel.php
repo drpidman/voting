@@ -13,7 +13,8 @@
     <title>Painel</title>
 
     <script>
-        let action_endpoint = "<?php echo $addproduct ?>";
+        let action_post_endpoint = "<?php echo $addproduct ?>";
+        let action_delete_endpoint = "<?php echo $deleteproduct ?>";
     </script>
 </head>
 
@@ -42,6 +43,7 @@
     </main>
 
     <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/painel/postproduct.js"></script>
+    <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/painel/deleteproduct.js"></script>
 </body>
 
 </html>

@@ -58,7 +58,7 @@ async function postProduct(ev) {
 
     this.innerText = "aguarde..."
 
-    await fetch(action_endpoint, {
+    await fetch(action_post_endpoint, {
         method: "POST",
         body: product_metadata
     }).then(async (res) => {
@@ -77,15 +77,15 @@ async function postProduct(ev) {
         console.log(product)
 
         list.innerHTML += `
-        <div class="card" product=${product.product_name}>
+        <div class="card" product="${product.product_name}">
             <section class="card top align-center">
                 <section class="card hover:actions">
-                    <button class="btn-warn :effect" for=${product.product_name}>Deletar</button>
+                    <button class="btn-warn :effect" for="${product.product_name}" onclick="deleteProduct(this)">Deletar</button>
                 </section>
                 <section class="candidate-number">
                     <span>${product.product_number}</span>
                 </section>
-                <img src=${product.product_image} alt="canditate">
+                <img src="${product.product_image}" alt="canditate">
             </section>
             <section class="card body pt-1">
                 <h1>${product.product_name}</h1>
@@ -102,7 +102,6 @@ async function postProduct(ev) {
 }
 
 document.getElementById("post-product").addEventListener('click', postProduct);
-
 inputs.product_name.addEventListener('input', productTextValueChange);
 inputs.product_description.addEventListener('input', productTextValueChange);
 inputs.product_number.addEventListener('input', productTextValueChange);

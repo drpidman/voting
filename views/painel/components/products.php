@@ -4,7 +4,7 @@ foreach ($products as $product) {
     <div class="card" product="<?php echo $product->product_name ?>">
         <section class="card top align-center">
             <section class="card hover:actions">
-                <button class="btn-warn :effect" for="<?php echo $product->product_name ?> ">Deletar</button>
+                <button class="btn-warn :effect" for="<?php echo $product->product_name ?>" onclick="deleteProduct(this)">Deletar</button>
             </section>
             <section class="candidate-number">
                 <span><?php echo $product->product_number ?></span>
