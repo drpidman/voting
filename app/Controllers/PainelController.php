@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\ProductModel;
 use Symfony\Component\Routing\RouteCollection;
 
 session_start();
@@ -11,6 +12,9 @@ class PainelController
 	{
         $homepage = $routes->get('homepage')->getPath();
         $addproduct = $routes->get('painel-post-product')->getPath();
+
+        $product = new ProductModel();
+		$products = $product->getProducts();
 
         $user = $_SESSION['user'];
     

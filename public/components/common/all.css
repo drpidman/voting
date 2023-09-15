@@ -101,8 +101,25 @@ input {
     transition: all 200ms ease-in-out;
 }
 
+
 .btn-success.\:effect:hover {
     background-color: rgb(136, 255, 136);
+}
+
+.btn-warn {
+    background-color: rgb(240, 255, 107);
+    color: rgb(20, 32, 20);
+    font-weight: bold;
+    border-radius: .3rem;
+    padding: .9rem 1.5rem;
+    border: none;
+
+    box-shadow: 1px 1px 20px #0000009f;
+    transition: all 200ms ease-in-out;
+}
+
+.btn-warn.\:effect:hover {
+    background-color: rgb(255, 223, 78);
 }
 
 .card {

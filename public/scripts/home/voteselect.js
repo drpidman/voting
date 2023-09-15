@@ -1,4 +1,4 @@
-let vote_select = document.querySelectorAll("button[action='voteClick']")
+let vote_click = document.querySelectorAll("button[action='voteClick']")
 let vote_status = document.getElementById("vote-status");
 
 /**
@@ -7,13 +7,14 @@ let vote_status = document.getElementById("vote-status");
  */
 function voteClick(e) {
     e.preventDefault();
-    console.log("vptew");
+
+
 
     vote_status.style.animation = "expand-fadein 0.3s forwards";
     document.body.style.overflow = "hidden";
+
 }
 
-for (let button of vote_select) {
-    console.log(button)
+for (let button of vote_click) {
     button.addEventListener("click", voteClick);
 }

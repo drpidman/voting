@@ -33,9 +33,12 @@
             require_once "components/preview.php"
             ?>
         </div>
-        <div class="products pt-3">
-            3...
-        </div>
+        <section class="candidates pt-3" id="product-list">
+            <!-- LISTAR PRODUTOS -->
+            <?php 
+                require_once "components/products.php"
+            ?>
+        </section>
     </main>
 
     <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/painel/postproduct.js"></script>

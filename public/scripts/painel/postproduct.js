@@ -1,3 +1,5 @@
+let list = document.getElementById("product-list");
+
 let inputs = {
     product_name: document.querySelector("input[name='product_name']"),
     product_description: document.querySelector("input[name='product_description']"),
@@ -59,11 +61,11 @@ async function postProduct(ev) {
     await fetch(action_endpoint, {
         method: "POST",
         body: product_metadata
-    }).then((res) => {
+    }).then(async (res) => {
         if (res.status == 404) {
             this.innerText = "Dados incompletos";
 
-            setTimeout(() => { 
+            setTimeout(() => {
                 this.innerText = "confirmar"
             }, 3000)
             return;
@@ -71,7 +73,29 @@ async function postProduct(ev) {
 
         this.innerText = "Sucesso";
 
-        setTimeout(() => { 
+        const product = await res.json();
+        console.log(product)
+
+        list.innerHTML += `
+        <div class="card" product=${product.product_name}>
+            <section class="card top align-center">
+                <section class="card hover:actions">
+                    <button class="btn-warn :effect" for=${product.product_name}>Deletar</button>
+                </section>
+                <section class="candidate-number">
+                    <span>${product.product_number}</span>
+                </section>
+                <img src=${product.product_image} alt="canditate">
+            </section>
+            <section class="card body pt-1">
+                <h1>${product.product_name}</h1>
+                <br>
+                <p>${product.product_description}</p>
+            </section>
+        </div>
+        `
+
+        setTimeout(() => {
             this.innerText = "confirmar"
         }, 2000)
     })
