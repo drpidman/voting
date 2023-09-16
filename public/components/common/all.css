@@ -23,6 +23,12 @@
     flex-direction: row;
 }
 
+@media (max-width: 768px) {
+    .md-col {
+        flex-direction: column !important;
+    }
+}
+
 .justify-center {
     justify-content: center;
 }
@@ -79,8 +85,23 @@
     width: 50% !important;
 }
 
+.w-60 {
+    width: 60% !important;
+}
+
+.w-80 {
+    width: 80% !important;
+}
+
 .w-100 {
     width: 100% !important;
+}
+
+
+@media (max-width: 768px) {
+    .md-w100 {
+        width: 100% !important;
+    }
 }
 
 input {

@@ -2,7 +2,7 @@
     <!-- FORMULARIO -->
     <form method="POST">
         <!-- METADADOS -->
-        <section class="d-flex form-item">
+        <section class="d-flex form-item md-col md-w100">
             <label>
                 Nome do produto
                 <input name="product_name" type="text" placeholder="Banana da terra" required>

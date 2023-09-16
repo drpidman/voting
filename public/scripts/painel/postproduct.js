@@ -64,9 +64,11 @@ async function postProduct(ev) {
     }).then(async (res) => {
         if (res.status == 404) {
             this.innerText = "Dados incompletos";
+            this.style.backgroundColor = "#EF6F6C";
 
             setTimeout(() => {
                 this.innerText = "confirmar"
+                this.style.backgroundColor = "";
             }, 3000)
             return;
         }

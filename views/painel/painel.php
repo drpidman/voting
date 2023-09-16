@@ -24,20 +24,20 @@
     ?>
 
     <main class="d-flex col justify-center align-center pt-3">
-        <div class="product d-flex row w-50">
+        <section class="product d-flex row w-50 md-w100 md-col">
             <!-- ADICIONAR PRODUTO -->
             <?php
-            require_once "components/form.php"
+            require_once "components/painel/form.php"
             ?>
             <!-- PREVISUALIZAR PRODUTO -->
             <?php
-            require_once "components/preview.php"
+            require_once "components/painel/preview.php"
             ?>
-        </div>
+        </section>
         <section class="candidates pt-3" id="product-list">
             <!-- LISTAR PRODUTOS -->
             <?php 
-                require_once "components/products.php"
+                require_once "components/painel/products.php"
             ?>
         </section>
     </main>
