@@ -20,7 +20,7 @@
         </section>
         <!-- ACTION - CONFIRMAR -->
         <section class="d-flex form-item pt-1 w-100">
-            <button class="w-100 btn-success :effect" type="button" id="allow-vote">Liberar cabine</button>
+            <button class="w-100 btn-success :effect" type="button" id="allow-vote" onclick="allowVote(this)">Liberar cabine</button>
         </section>
     </form>
 
