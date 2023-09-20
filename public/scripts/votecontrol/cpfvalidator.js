@@ -36,7 +36,10 @@ function calcSecondChecker(cpfWithChecker1) {
     const lastSumChecker2 = sum % 11
     return lastSumChecker2 < 2 ? 0 : 11 - lastSumChecker2
 }
-
+/**
+ * 
+ * @param {HTMLInputElement} e 
+ */
 function formatCpf(e) {
     let cpf = e.value.replace(/\D/g, '');
     let formattedCpf = '';
@@ -54,6 +57,11 @@ function formatCpf(e) {
     e.value = formattedCpf;
 }
 
+/**
+ * 
+ * @param {string} cpf 
+ * @returns {boolean}
+ */
 function validateCpf(cpf) {
     // https://github.com/tiagoporto/gerador-validador-cpf/blob/main/src/lib/CPF.ts
     const cleanCpf = String(cpf).replace(/[\s.-]/g, '');
@@ -103,6 +111,4 @@ function allowVote(e) {
 
         return;
     }
-
-    
 }
