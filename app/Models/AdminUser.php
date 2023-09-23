@@ -3,7 +3,7 @@ namespace App\Models;
 
 use mysqli;
 
-class User  {
+class UserAdmin  {
     public $username;
     public $password;
 };
@@ -15,7 +15,7 @@ class AdminUser {
 
     public function setUser(String $email, String $password)
     {
-        $user = new User();
+        $user = new UserAdmin();
         $user->username = $email;
         $user->password = $password;
 

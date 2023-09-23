@@ -3,7 +3,7 @@
         'name' => 'gmaccario/simple-mvc-php-framework',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7539c342b42261ad26ed0759fee3032c2a26e5a2',
+        'reference' => '0f8d5e6be27552d2d84f94685cbae5e74f42ca9c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'gmaccario/simple-mvc-php-framework' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7539c342b42261ad26ed0759fee3032c2a26e5a2',
+            'reference' => '0f8d5e6be27552d2d84f94685cbae5e74f42ca9c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

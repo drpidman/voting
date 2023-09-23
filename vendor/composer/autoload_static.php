@@ -56,7 +56,17 @@ class ComposerStaticInit04b95930124df24491635b9f1b737508
     );
 
     public static $classMap = array (
+        'App\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Controllers/LoginController.php',
         'App\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Controllers/PageController.php',
+        'App\\Controllers\\PainelController' => __DIR__ . '/../..' . '/app/Controllers/PainelController.php',
+        'App\\Controllers\\PainelVoteController' => __DIR__ . '/../..' . '/app/Controllers/PainelVoteController.php',
+        'App\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Controllers/ProductController.php',
+        'App\\Models\\AdminUser' => __DIR__ . '/../..' . '/app/Models/AdminUser.php',
+        'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/ProductModel.php',
+        'App\\Models\\ProductModel' => __DIR__ . '/../..' . '/app/Models/ProductModel.php',
+        'App\\Models\\UserAdmin' => __DIR__ . '/../..' . '/app/Models/AdminUser.php',
+        'App\\Models\\UserModel' => __DIR__ . '/../..' . '/app/Models/UserModel.php',
+        'App\\Models\\UserVote' => __DIR__ . '/../..' . '/app/Models/UserModel.php',
         'App\\Router' => __DIR__ . '/../..' . '/app/Router.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',

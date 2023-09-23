@@ -8,7 +8,7 @@
                 <input name="first_name" type="text" placeholder="Nome" required>
             </label>
             <label>
-                Sobrenome
+                Sobrenome:
                 <input name="second_name" type="text" placeholder="Sobrenome" required>
             </label>
         </section>

@@ -8,6 +8,7 @@ let inputs = {
 }
 
 let allowVoteButton = document.getElementById("allow-vote");
+let vote_status = document.getElementById("vote-status");
 
 /**
  * https://github.com/tiagoporto/gerador-validador-cpf/blob/main/src/lib/calcChecker.ts
@@ -36,8 +37,8 @@ function calcSecondChecker(cpfWithChecker1) {
     const lastSumChecker2 = sum % 11
     return lastSumChecker2 < 2 ? 0 : 11 - lastSumChecker2
 }
+
 /**
- * 
  * @param {HTMLInputElement} e 
  */
 function formatCpf(e) {
@@ -87,7 +88,7 @@ function validateCpf(cpf) {
 /**
  * @param {MouseEvent} e 
  */
-function allowVote(e) {
+async function allowVote(e) {
 
     if (inputs.first_name.value == "" || inputs.second_name == "" || inputs.cpf == "") {
         allowVoteButton.innerText = "Complete todos os campos"
@@ -111,4 +112,22 @@ function allowVote(e) {
 
         return;
     }
+
+    let allowForm = new FormData();
+    allowForm.append("user_name", inputs.first_name.value)
+    allowForm.append("user_surname", inputs.second_name.value)
+    allowForm.append("user_cpf", inputs.cpf.value);
+
+    await fetch(action_allow_endpoint, {
+        method: "POST",
+        body: allowForm
+    }).then(async (res) => {
+        if (res.ok) {
+            const data = await res.json();
+            vote_status.style.animation = "expand-fadein 0.3s forwards";
+            document.body.style.overflow = "hidden";
+
+
+        }
+    })
 }

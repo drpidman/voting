@@ -6,7 +6,17 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controllers\\LoginController' => $baseDir . '/app/Controllers/LoginController.php',
     'App\\Controllers\\PageController' => $baseDir . '/app/Controllers/PageController.php',
+    'App\\Controllers\\PainelController' => $baseDir . '/app/Controllers/PainelController.php',
+    'App\\Controllers\\PainelVoteController' => $baseDir . '/app/Controllers/PainelVoteController.php',
+    'App\\Controllers\\ProductController' => $baseDir . '/app/Controllers/ProductController.php',
+    'App\\Models\\AdminUser' => $baseDir . '/app/Models/AdminUser.php',
+    'App\\Models\\Product' => $baseDir . '/app/Models/ProductModel.php',
+    'App\\Models\\ProductModel' => $baseDir . '/app/Models/ProductModel.php',
+    'App\\Models\\UserAdmin' => $baseDir . '/app/Models/AdminUser.php',
+    'App\\Models\\UserModel' => $baseDir . '/app/Models/UserModel.php',
+    'App\\Models\\UserVote' => $baseDir . '/app/Models/UserModel.php',
     'App\\Router' => $baseDir . '/app/Router.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
