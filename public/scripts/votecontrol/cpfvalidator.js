@@ -118,16 +118,42 @@ async function allowVote(e) {
     allowForm.append("user_surname", inputs.second_name.value)
     allowForm.append("user_cpf", inputs.cpf.value);
 
+
     await fetch(action_allow_endpoint, {
         method: "POST",
         body: allowForm
     }).then(async (res) => {
+        if (res.status === 401) {
+            const data = await res.json();
+
+            vote_status.style.animation = "expand-fadein 0.3s forwards";
+            vote_status.style.backgroundColor = "#EF6F6C";
+            document.body.style.overflow = "hidden";
+
+            vote_status.innerHTML += `
+                    <h1>Ocorreu um erro</h1>
+                    <p>Motivo: ${data.message}</p>
+                `
+
+            setTimeout(() => {
+                vote_status.style.animation = "hidden-fadeout  0.3s forwards";
+                vote_status.style.backgroundColor = "";
+                document.body.style.overflow = "";
+                vote_status.innerHTML = "";
+            }, 4000)
+        }
+
         if (res.ok) {
             const data = await res.json();
             vote_status.style.animation = "expand-fadein 0.3s forwards";
             document.body.style.overflow = "hidden";
 
-
+            vote_status.innerHTML += `
+                    <h1>Agurdando voto</h1>
+                    <p>Usuario: ${data.name}</p>
+                    <p>CPF: ${data.cpf}</p>
+                `
         }
     })
-}
+
+} 

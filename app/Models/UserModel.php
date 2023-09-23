@@ -31,30 +31,30 @@ class UserModel {
         );
 
         if ($stmt->execute()) {
-            return $this->getByName($user->name);
+            return $this->getByName($user->cpf);
         }
 
         $stmt->close();
         $conn->close();
     }
 
-    public function getByName(String $user_name) {
+    public function getByName(String $cpf) {
         $conn = $this->connect();
 
         $sql =
-            "SELECT name, cpf FROM users WHERE name = ?";
+            "SELECT name, cpf FROM users WHERE cpf = ?";
 
         $stmt = $conn->prepare($sql);
 
-        $stmt->bind_param("s", $user_name);
+        $stmt->bind_param("s", $cpf);
 
         $stmt->execute();
-        $stmt->bind_result($name, $cpf);
+        $stmt->bind_result($name, $ucpf);
 
         if ($stmt->fetch()) {
             $user = new UserVote();
             $user->name = $name;
-            $user->cpf = $cpf;
+            $user->cpf = $ucpf;
 
             return $user;
         } else {
@@ -65,4 +65,10 @@ class UserModel {
         $conn->close();
     }
 
+    
+
+    public function exists(String $cpf) {
+        $user = $this->getByName($cpf);
+        return !isset($user);
+    }
 }

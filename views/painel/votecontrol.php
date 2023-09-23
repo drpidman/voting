@@ -21,8 +21,7 @@
     require_once APP_ROOT . '/views/components/navbar.php'
     ?>
 
-    <section class="vote-status" id="vote-status">
-        <h1 id="message-await">Aguardando Voto</h1>
+    <section class="vote-status col" id="vote-status">
     </section>
 
     <main class="d-flex col justify-center align-center pt-3">

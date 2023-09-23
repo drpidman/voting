@@ -31,7 +31,8 @@
 .vote-status {
     position: fixed;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     padding-top: 10rem;
     background-color: rgb(107, 255, 107);
     width: 100%;
