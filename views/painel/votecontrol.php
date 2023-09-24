@@ -12,6 +12,7 @@
 
     <script>
         let action_allow_endpoint = "<?php echo $allowvote ?>";
+        let host = "ws://<?php echo $_SERVER['SERVER_ADDR'] ?>:8090";
     </script>
     <title>Controle de Cabine</title>
 </head>

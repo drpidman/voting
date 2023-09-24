@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/navbar.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/common/all.css">
 
+    <script>
+        let host = "ws://<?php echo $_SERVER['SERVER_ADDR'] ?>:8090";
+    </script>
+
     <title>Voting</title>
 </head>
 
@@ -18,8 +22,9 @@
     <?php
     require_once APP_ROOT . "/views/components/navbar.php";
     ?>
-    <section class="vote-status" id="vote-status">
-        <h1>Seu voto foi cumputado!</h1>
+    <section class="vote-status" id="vote-status" style="z-index: 100; opacity: 1">
+        <h1 style="font-size: 2rem;">Aguardando liberação</h1>
+        <p>Aguardando a cabine</p>
     </section>
     <!-- CONTEÚDO BASE -->
     <main class="container d-flex justify-center">
@@ -41,7 +46,7 @@
                         <p><?php echo $product->product_description ?></p>
                     </div>
                     <div class="card footer w-100 pt-1" data-effect="show-vote-sucess">
-                        <button class="btn-success w-100 :effect" action="voteClick" for="<?php echo $product->product_number?>" >VOTAR</button>
+                        <button class="btn-success w-100 :effect" action="voteClick" for="<?php echo $product->product_number ?>">VOTAR</button>
                     </div>
                 </div>
             <?php
@@ -51,13 +56,8 @@
     </main>
     <footer class="d-flex justify-end">
         <!-- CONTEUDO DINAMICO -->
-        <section class="container d-flex col m-1">
-            <div class="container d-flex row">
-                <span>Votar: 123</span>
-            </div>
-            <div class="container d-flex row">
-                <span>CPF: 454.703.298-01</span>
-            </div>
+        <section class="container d-flex col m-1" id="vote-user">
+            
         </section>
     </footer>
 
