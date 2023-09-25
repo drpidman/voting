@@ -32,6 +32,9 @@
             ?>
         </section>
     </main>
+
+    <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/votecontrol/index.js"></script>
+    <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/votecontrol/allowVote.js"></script>
 </body>
 
 </html>

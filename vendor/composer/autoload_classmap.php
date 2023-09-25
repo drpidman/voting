@@ -6,17 +6,21 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Chat' => $baseDir . '/app/Chat.php',
     'App\\Controllers\\LoginController' => $baseDir . '/app/Controllers/LoginController.php',
     'App\\Controllers\\PageController' => $baseDir . '/app/Controllers/PageController.php',
     'App\\Controllers\\PainelController' => $baseDir . '/app/Controllers/PainelController.php',
     'App\\Controllers\\PainelVoteController' => $baseDir . '/app/Controllers/PainelVoteController.php',
     'App\\Controllers\\ProductController' => $baseDir . '/app/Controllers/ProductController.php',
     'App\\Models\\AdminUser' => $baseDir . '/app/Models/AdminUser.php',
+    'App\\Models\\Connection' => $baseDir . '/app/Models/Connection.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/ProductModel.php',
     'App\\Models\\ProductModel' => $baseDir . '/app/Models/ProductModel.php',
     'App\\Models\\UserAdmin' => $baseDir . '/app/Models/AdminUser.php',
     'App\\Models\\UserModel' => $baseDir . '/app/Models/UserModel.php',
     'App\\Models\\UserVote' => $baseDir . '/app/Models/UserModel.php',
+    'App\\Models\\VoteStatus' => $baseDir . '/app/Models/VoteStatus.php',
+    'App\\Models\\VoteStatusModel' => $baseDir . '/app/Models/VoteStatus.php',
     'App\\Router' => $baseDir . '/app/Router.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',

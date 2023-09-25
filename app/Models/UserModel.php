@@ -4,18 +4,14 @@ namespace App\Models;
 
 use mysqli;
 
-class UserVote {
+class UserVote
+{
     public $name;
     public $cpf;
 };
 
-class UserModel {
-
-    public function connect()
-    {
-        return new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    }
-
+class UserModel extends Connection
+{
     public function new(UserVote $user)
     {
         $conn = $this->connect();
@@ -38,7 +34,8 @@ class UserModel {
         $conn->close();
     }
 
-    public function getByName(String $cpf) {
+    public function getByName(String $cpf)
+    {
         $conn = $this->connect();
 
         $sql =
@@ -65,9 +62,10 @@ class UserModel {
         $conn->close();
     }
 
-    
 
-    public function exists(String $cpf) {
+
+    public function exists(String $cpf)
+    {
         $user = $this->getByName($cpf);
         return !isset($user);
     }

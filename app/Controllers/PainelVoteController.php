@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\UserModel;
 use App\Models\UserVote;
+use App\Models\VoteStatus;
+use App\Models\VoteStatusModel;
 use Symfony\Component\Routing\RouteCollection;
 
 
@@ -58,9 +60,22 @@ class PainelVoteController
         $user_search = $user_model->getByName($user->cpf);
 
         if ($user_search->name === $user->name || $user_search->cpf === $user->cpf) {
-            echo json_encode(["message" => "Usuario já votou"]);
+            echo json_encode(["message" => "Usuario já foi registrado, consequentemente já computou um voto."]);
             
             http_response_code(401);
         }
+    }
+
+    public function getVoteStatus(RouteCollection $routes) {
+        if (!isset($_POST['id'])) {
+            http_response_code(401);
+            return;
+        }
+
+        $id = $_POST['id'];
+
+        $status = new VoteStatusModel();
+        
+        echo json_encode($status->getStatus($id));
     }
 }

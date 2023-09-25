@@ -5,3 +5,5 @@ CREATE TABLE `voting_sys`.`vote_status` (
     `cpf` TEXT NOT NULL COMMENT 'CPF DO USUARIO PERMITIDO',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
+
+INSERT INTO `vote_status` (`id`, `status`, `user`, `cpf`) VALUES ('12', '0', '', '')

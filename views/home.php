@@ -12,6 +12,7 @@
 
     <script>
         let host = "ws://<?php echo $_SERVER['SERVER_ADDR'] ?>:8090";
+        let voteStatus = "<?php echo $routes->get('painel-status-get')->getPath(); ?>";
     </script>
 
     <title>Voting</title>
@@ -60,7 +61,6 @@
             
         </section>
     </footer>
-
     <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/home/voteselect.js"></script>
 </body>
 

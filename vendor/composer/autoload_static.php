@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit04b95930124df24491635b9f1b737508
+class ComposerStaticInit8a2ee0181e6fddb14eae278f0b5f04a1
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
@@ -108,8 +108,8 @@ class ComposerStaticInit04b95930124df24491635b9f1b737508
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -126,17 +126,21 @@ class ComposerStaticInit04b95930124df24491635b9f1b737508
     );
 
     public static $classMap = array (
+        'App\\Chat' => __DIR__ . '/../..' . '/app/Chat.php',
         'App\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Controllers/LoginController.php',
         'App\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Controllers/PageController.php',
         'App\\Controllers\\PainelController' => __DIR__ . '/../..' . '/app/Controllers/PainelController.php',
         'App\\Controllers\\PainelVoteController' => __DIR__ . '/../..' . '/app/Controllers/PainelVoteController.php',
         'App\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Controllers/ProductController.php',
         'App\\Models\\AdminUser' => __DIR__ . '/../..' . '/app/Models/AdminUser.php',
+        'App\\Models\\Connection' => __DIR__ . '/../..' . '/app/Models/Connection.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/ProductModel.php',
         'App\\Models\\ProductModel' => __DIR__ . '/../..' . '/app/Models/ProductModel.php',
         'App\\Models\\UserAdmin' => __DIR__ . '/../..' . '/app/Models/AdminUser.php',
         'App\\Models\\UserModel' => __DIR__ . '/../..' . '/app/Models/UserModel.php',
         'App\\Models\\UserVote' => __DIR__ . '/../..' . '/app/Models/UserModel.php',
+        'App\\Models\\VoteStatus' => __DIR__ . '/../..' . '/app/Models/VoteStatus.php',
+        'App\\Models\\VoteStatusModel' => __DIR__ . '/../..' . '/app/Models/VoteStatus.php',
         'App\\Router' => __DIR__ . '/../..' . '/app/Router.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
@@ -159,9 +163,9 @@ class ComposerStaticInit04b95930124df24491635b9f1b737508
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit04b95930124df24491635b9f1b737508::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit04b95930124df24491635b9f1b737508::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit04b95930124df24491635b9f1b737508::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8a2ee0181e6fddb14eae278f0b5f04a1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8a2ee0181e6fddb14eae278f0b5f04a1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8a2ee0181e6fddb14eae278f0b5f04a1::$classMap;
 
         }, null, ClassLoader::class);
     }

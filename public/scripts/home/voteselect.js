@@ -27,7 +27,6 @@ socket.onmessage = function (e) {
     }
 }
 
-
 /**
  * 
  * @param {MouseEvent} e 
@@ -46,4 +45,29 @@ function voteClick(e) {
 
 for (let button of vote_click) {
     button.addEventListener("click", voteClick);
+}
+
+window.onload = function () {
+    let form = new FormData();
+    form.append("id", 12)
+
+    fetch(voteStatus, {
+        method: "POST",
+        body: form
+    }).then(async (res) => {
+        const data = await res.json();
+
+        if (data.status) {
+            vote_status.style.animation = "hidden-fadeout 0.3s forwards";
+
+            vote_user.innerHTML += `
+            <div class="container d-flex row">
+                    <span>Nome: ${data.name}</span>
+            </div>
+            <div class="container d-flex row">
+                    <span>CPF: ${data.cpf}</span>
+            </div>
+            `;
+        }
+    })
 }

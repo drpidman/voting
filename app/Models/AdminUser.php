@@ -1,18 +1,17 @@
 <?php
+
 namespace App\Models;
 
 use mysqli;
 
-class UserAdmin  {
+class UserAdmin
+{
     public $username;
     public $password;
 };
 
-class AdminUser {
-    public function connect() {
-        return new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    }
-
+class AdminUser extends Connection
+{
     public function setUser(String $email, String $password)
     {
         $user = new UserAdmin();

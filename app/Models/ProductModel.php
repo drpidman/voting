@@ -13,14 +13,8 @@ class Product
     public $product_votes;
 };
 
-class ProductModel
+class ProductModel extends Connection
 {
-    public function connect()
-    {
-        return new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    }
-
-
     public function new(Product $product)
     {
         $conn = $this->connect();

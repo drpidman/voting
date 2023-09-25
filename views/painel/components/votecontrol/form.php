@@ -23,7 +23,4 @@
             <button class="w-100 btn-success :effect" type="button" id="allow-vote" onclick="allowVote(this)">Liberar cabine</button>
         </section>
     </form>
-
-    <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/votecontrol/cpfvalidator.js"></script>
-    <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/votecontrol/allowVote.js"></script>
 </section>
