@@ -12,6 +12,13 @@
 
     <script>
         let action_allow_endpoint = "<?php echo $allowvote ?>";
+        let onVoteItem = "<?php echo $routes->get('painel-vote-control-vote')->getPath(); ?>";
+        let userGet = "<?php echo $routes->get('painel-user-get')->getPath(); ?>";
+
+        let voteStatus = "<?php echo $routes->get('painel-status-get')->getPath(); ?>";
+        let updateVoteStatus = "<?php echo $routes->get('painel-status-update')->getPath(); ?>";
+
+
         let host = "ws://<?php echo $_SERVER['SERVER_ADDR'] ?>:8090";
     </script>
     <title>Controle de Cabine</title>

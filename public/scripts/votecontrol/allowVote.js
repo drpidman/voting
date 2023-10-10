@@ -31,6 +31,12 @@ async function allowVote(e) {
     allowForm.append("user_surname", inputs.second_name.value)
     allowForm.append("user_cpf", inputs.cpf.value);
 
+    let statusForm = new FormData();
+    statusForm.append("id", 12);
+    statusForm.append("vote_status", true);
+    statusForm.append("user_name", allowForm.get("user_name"));
+    statusForm.append("user_surname", allowForm.get("user_surname"));
+    statusForm.append("user_cpf", allowForm.get("user_cpf"));
 
     await fetch(action_allow_endpoint, {
         method: "POST",
@@ -71,11 +77,18 @@ async function allowVote(e) {
                 type: "allow-vote",
                 user: {
                     name: data.name,
-                    cpf: data.cpf    
+                    cpf: data.cpf
                 }
             }));
 
         }
+    })
+
+    await fetch(updateVoteStatus, {
+        method: "POST",
+        body: statusForm
+    }).then(async (res) => {
+        console.log(await res.text());
     })
 
 } 

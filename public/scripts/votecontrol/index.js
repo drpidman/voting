@@ -1,16 +1,37 @@
 let socket = new WebSocket(host);
 
-socket.onerror = function(err) {
+socket.onerror = function (err) {
     console.log("Error", err);
 }
 
-socket.onmessage = function(e) {
+socket.onmessage = async function (e) {
     const data = JSON.parse(e.data);
 
-    console.log(data);
+    if (data.type == "vote") {
+        let voteData = new FormData();
+        voteData.append("product_number", data.selectedItem);
+        voteData.append("user_cpf", data.user.cpf);
+
+        console.log(data.user)
+
+        await fetch(onVoteItem, {
+            method: "POST",
+            body: voteData
+        }).then(async (res) => {
+            const voteItem = await res.json();
+
+            if (voteItem.status == "vote-success") {
+                vote_status.innerHTML = `
+                    <h1 style="font-size: 2rem">O voto do usuario foi computado</h1>
+                `
+
+                setTimeout(() => {
+                    vote_status.style.animation = "hidden-fadeout 0.3s forwards";
+                }, 4000)
+            }
+        })
+    }
 }
-
-
 
 let inputs = {
     /** @type {HTMLInputElement} */
@@ -97,4 +118,27 @@ function validateCpf(cpf) {
     const checker2 = calcSecondChecker(`${firstNineDigits}${checker1}`)
 
     return checker === `${checker1}${checker2}`
+}
+
+window.onload = function () {
+    let form = new FormData();
+    form.append("id", 12)
+
+    fetch(voteStatus, {
+        method: "POST",
+        body: form
+    }).then(async (res) => {
+        const data = await res.json();
+        console.log(data);
+
+        if (data.status) {
+            vote_status.style.animation = "expand-fadein 0.3s forwards";
+
+            vote_status.innerHTML = `
+                    <h1 style="font-size: 2rem">Agurdando voto</h1>
+                    <p>Usuario: ${data.user}</p>
+                    <p>CPF: ${data.cpf}</p>
+                `
+        }
+    })
 }

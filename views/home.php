@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main/candidates.css">
+    <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main/footer.css">
+
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/navbar.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/common/all.css">
 
@@ -28,7 +30,7 @@
         <p>Aguardando a cabine</p>
     </section>
     <!-- CONTEÚDO BASE -->
-    <main class="container d-flex justify-center">
+    <main class="container d-flex justify-center mb-5">
         <!-- CONTEUDO DINAMICO -->
         <section class="candidates pt-3">
             <?php
@@ -55,11 +57,9 @@
             ?>
         </section>
     </main>
-    <footer class="d-flex justify-end">
+    <footer class="footer-vote-status d-flex justify-end">
         <!-- CONTEUDO DINAMICO -->
-        <section class="container d-flex col m-1" id="vote-user">
-            
-        </section>
+        <section class="container d-flex col m-1" id="vote-user"></section>
     </footer>
     <script src="<?php echo URL_SUBFOLDER ?>/public/scripts/home/voteselect.js"></script>
 </body>

@@ -38,7 +38,6 @@ class AdminUser extends Connection
             return null;
         }
 
-        // Feche a declaração e a conexão com o banco de dados
         $stmt->close();
         $conn->close();
     }

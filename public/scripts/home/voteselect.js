@@ -20,7 +20,7 @@ socket.onmessage = function (e) {
                 <span>Nome: ${data.user.name}</span>
         </div>
         <div class="container d-flex row">
-                <span>CPF: ${data.user.cpf}</span>
+                <span id="user-query-cpf">CPF: ${data.user.cpf}</span>
         </div>
         `;
 
@@ -34,11 +34,27 @@ socket.onmessage = function (e) {
 function voteClick(e) {
     e.preventDefault();
 
+    const selectedItem = e.target.attributes.for.nodeValue;
+
     vote_status.style.animation = "expand-fadein 0.3s forwards";
     document.body.style.overflow = "hidden";
 
+    /**
+     * Pegar o nome de usuario do elemento filho do container vote_user.
+     * Transformar "Nome: nome" em: ["Nome:", "nome"] e pegar o item 1 do array("nome").
+     * Começar a string apartir do indice 1, removendo o espaço em branco que é indice 0
+     * @type {String}
+     */
+    let username = vote_user.children[0].innerText.split(":")[1].slice(1);
+    /**
+     * @type {String}
+    */
+    let cpf = vote_user.children[1].innerText.split(":")[1].slice(1);
+
     socket.send(JSON.stringify({
-        type: "vote"
+        type: "vote",
+        selectedItem,
+        user: { username, cpf }
     }))
 
 }
@@ -62,7 +78,7 @@ window.onload = function () {
 
             vote_user.innerHTML += `
             <div class="container d-flex row">
-                    <span>Nome: ${data.name}</span>
+                    <span>Nome: ${data.user}</span>
             </div>
             <div class="container d-flex row">
                     <span>CPF: ${data.cpf}</span>

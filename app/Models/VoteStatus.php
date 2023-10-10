@@ -36,14 +36,21 @@ class VoteStatusModel extends Connection
         }
     }
 
-    public function updateStatus(int $id, bool $status)
+    public function updateStatus(int $id, bool $status, UserVote $user)
     {
         $conn = $this->connect();
 
-        $stmt = $conn->prepare("UPDATE status SET status = ? WHERE id = ?");
+        if ($this->getStatus($id)->status) {
+            $user->name = "empt";
+            $user->cpf = "empt";
+        }
+
+        $stmt = $conn->prepare("UPDATE vote_status SET status = ?, user = ?, cpf = ? WHERE id = ?");
         $stmt->bind_param(
-            "ss",
+            "ssss",
             $status,
+            $user->name,
+            $user->cpf,
             $id
         );
 
@@ -52,10 +59,9 @@ class VoteStatusModel extends Connection
         try {
             if ($stmt->fetch()) {
                 return $this->getStatus($id);
-            } 
+            }
         } catch (Exception $e) {
             return json_last_error_msg();
         }
-        
     }
 }

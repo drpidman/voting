@@ -73,6 +73,10 @@
     padding-top: 3rem !important;
 }
 
+.mb-5 {
+    margin-bottom: 5rem;
+}
+
 .m-1 {
     margin: 1rem !important;
 }
@@ -80,6 +84,8 @@
 .m-2 {
     margin: 2rem !important;
 }
+
+
 
 .w-50 {
     width: 50% !important;

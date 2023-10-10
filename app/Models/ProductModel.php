@@ -99,6 +99,41 @@ class ProductModel extends Connection
         $conn->close();
     }
 
+    public function getByNumber(String $product_number)
+    {
+        $conn = $this->connect();
+
+        $sql =
+            "SELECT name,
+            description,
+            number,
+            image,
+            votes FROM products WHERE number = ?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("s", $product_number);
+
+        $stmt->execute();
+        $stmt->bind_result($name, $description, $number, $image, $votes);
+
+        if ($stmt->fetch()) {
+            $product = new Product();
+            $product->product_name = $name;
+            $product->product_description = $description;
+            $product->product_number = $number;
+            $product->product_image = $image;
+            $product->product_votes = $votes;
+
+            return $product;
+        } else {
+            return null;
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+
     public function getProducts()
     {
         $conn = $this->connect();
@@ -153,6 +188,27 @@ class ProductModel extends Connection
             $product->product_votes = $votes;
 
             return $product;
+        } else {
+            return null;
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+
+    public function setVotes(int $vote_num, String $product_name)
+    {
+        $conn = $this->connect();
+
+        $sql =
+            "UPDATE products SET votes = ? WHERE name = ?";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("ss", $vote_num, $product_name);
+
+        if ($stmt->execute()) {
+            return $this->getByName($product_name);
         } else {
             return null;
         }

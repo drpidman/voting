@@ -27,14 +27,14 @@ class UserModel extends Connection
         );
 
         if ($stmt->execute()) {
-            return $this->getByName($user->cpf);
+            return $this->getByCpf($user->cpf);
         }
 
         $stmt->close();
         $conn->close();
     }
 
-    public function getByName(String $cpf)
+    public function getByCpf(String $cpf)
     {
         $conn = $this->connect();
 
@@ -66,7 +66,7 @@ class UserModel extends Connection
 
     public function exists(String $cpf)
     {
-        $user = $this->getByName($cpf);
+        $user = $this->getByCpf($cpf);
         return !isset($user);
     }
 }
