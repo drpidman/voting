@@ -6,7 +6,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 session_start();
 
-class PainelController extends Controller
+class PainelController implements Controller
 {
 	public function load(RouteCollection $routes)
 	{
@@ -16,7 +16,7 @@ class PainelController extends Controller
         $deleteproduct = $routes->get('painel-delete-product')->getPath();
 
         $product = new ProductModel();
-		$products = $product->getProducts();
+		$products = $product->getAll();
 
         $user = $_SESSION['user'];
     

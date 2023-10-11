@@ -12,7 +12,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 session_start();
 
-class PainelVoteController extends Controller
+class PainelVoteController implements Controller
 {
     /**
      * Rota para exibir a pagina de painel

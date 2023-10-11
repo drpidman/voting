@@ -112,6 +112,6 @@ class ProductController
     {
         $products = new ProductModel();
 
-        echo json_encode($products->getProducts());
+        echo json_encode($products->getAll());
     }
 }

@@ -7,7 +7,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 session_start();
 
-class LoginController extends Controller
+class LoginController implements Controller
 {
     public function load(RouteCollection $routes)
     {

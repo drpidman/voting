@@ -4,9 +4,7 @@ namespace App\Controllers;
 
 use Symfony\Component\Routing\RouteCollection;
 
-class Controller
+interface Controller
 {
-    public function load(RouteCollection $routes)
-    {
-    }
+    public function load(RouteCollection $routes);
 }
