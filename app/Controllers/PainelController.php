@@ -6,9 +6,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 session_start();
 
-class PainelController
+class PainelController extends Controller
 {
-	public function showPainel(RouteCollection $routes)
+	public function load(RouteCollection $routes)
 	{
         $homepage = $routes->get('homepage')->getPath();
 

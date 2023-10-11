@@ -5,10 +5,10 @@ namespace App\Controllers;
 use App\Models\ProductModel;
 use Symfony\Component\Routing\RouteCollection;
 
-class PageController
+class PageController extends Controller
 {
     // Homepage action
-	public function indexAction(RouteCollection $routes)
+	public function load(RouteCollection $routes)
 	{
 		$product = new ProductModel();
 		$products = $product->getProducts();

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Models\AdminUser;
@@ -6,8 +7,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 session_start();
 
-class LoginController {
-    public function showAction(RouteCollection $routes)
+class LoginController extends Controller
+{
+    public function load(RouteCollection $routes)
     {
         $panel = $routes->get('painel')->getPath();
 
@@ -27,7 +29,7 @@ class LoginController {
                 require_once APP_ROOT . '/views/auth/login.php';
                 return;
             }
-            
+
             if (password_verify($password, $user->password)) {
                 $_SESSION['user'] = $user;
                 header('Location: ' . $panel);
