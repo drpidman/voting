@@ -49,7 +49,7 @@ async function allowVote(e) {
             vote_status.style.backgroundColor = "#EF6F6C";
             document.body.style.overflow = "hidden";
 
-            vote_status.innerHTML += `
+            vote_status.innerHTML = `
                     <h1>Ocorreu um erro</h1>
                     <p>Motivo: ${data.message}</p>
                 `
@@ -80,15 +80,16 @@ async function allowVote(e) {
                     cpf: data.cpf
                 }
             }));
+            
+            await fetch(updateVoteStatus, {
+                method: "POST",
+                body: statusForm
+            }).then(async (res) => {
+                console.log(await res.text());
+            })
 
         }
     })
 
-    await fetch(updateVoteStatus, {
-        method: "POST",
-        body: statusForm
-    }).then(async (res) => {
-        console.log(await res.text());
-    })
 
 } 

@@ -7,3 +7,4 @@ CREATE TABLE `voting_sys`.`vote_status` (
 ) ENGINE = InnoDB;
 
 INSERT INTO `vote_status` (`id`, `status`, `user`, `cpf`) VALUES ('12', '0', '', '')
+

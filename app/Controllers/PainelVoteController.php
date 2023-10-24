@@ -162,12 +162,12 @@ class PainelVoteController implements Controller
             return;
         }
 
-        // $user_session = $_SESSION['user'];
+        $user_session = $_SESSION['user'];
 
-        // if (!isset($user_session)) {
-        //     http_response_code(401);
-        //     return;
-        // }
+        if (!isset($user_session)) {
+            http_response_code(401);
+            return;
+        }
 
         $status = new VoteStatusModel();
         $user = new UserVote();

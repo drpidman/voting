@@ -27,6 +27,7 @@ socket.onmessage = async function (e) {
 
                 setTimeout(() => {
                     vote_status.style.animation = "hidden-fadeout 0.3s forwards";
+                    window.location.reload();
                 }, 4000)
             }
         })

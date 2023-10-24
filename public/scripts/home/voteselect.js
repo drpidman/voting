@@ -15,7 +15,7 @@ socket.onmessage = function (e) {
         vote_status.style.animation = "hidden-fadeout  0.3s forwards";
         document.body.style.overflow = "";
 
-        vote_user.innerHTML += `
+        vote_user.innerHTML = `
         <div class="container d-flex row">
                 <span>Nome: ${data.user.name}</span>
         </div>
@@ -31,7 +31,7 @@ socket.onmessage = function (e) {
  * 
  * @param {MouseEvent} e 
  */
-function voteClick(e) {
+async function voteClick(e) {
     e.preventDefault();
 
     const selectedItem = e.target.attributes.for.nodeValue;
@@ -51,12 +51,11 @@ function voteClick(e) {
     */
     let cpf = vote_user.children[1].innerText.split(":")[1].slice(1);
 
-    socket.send(JSON.stringify({
+    await socket.send(JSON.stringify({
         type: "vote",
         selectedItem,
         user: { username, cpf }
     }))
-
 }
 
 for (let button of vote_click) {
@@ -76,7 +75,7 @@ window.onload = function () {
         if (data.status) {
             vote_status.style.animation = "hidden-fadeout 0.3s forwards";
 
-            vote_user.innerHTML += `
+            vote_user.innerHTML = `
             <div class="container d-flex row">
                     <span>Nome: ${data.user}</span>
             </div>
