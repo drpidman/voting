@@ -39,17 +39,17 @@
                 <div class="card">
                     <div class="card top align-center">
                         <section class="candidate-number">
-                            <span><?php echo $product->product_number ?></span>
+                            <span><?php echo $product["product_number"] ?></span>
                         </section>
-                        <img src="<?php echo $product->product_image ?>" alt="canditate">
+                        <img src="<?php echo $product["product_image"] ?>" alt="canditate">
                     </div>
                     <div class="card body pt-1">
-                        <h1><?php echo $product->product_name ?></h1>
+                        <h1><?php echo $product["product_name"] ?></h1>
                         <br>
-                        <p><?php echo $product->product_description ?></p>
+                        <p><?php echo $product["product_description"] ?></p>
                     </div>
                     <div class="card footer w-100 pt-1" data-effect="show-vote-sucess">
-                        <button class="btn-success w-100 :effect" action="voteClick" for="<?php echo $product->product_number ?>">VOTAR</button>
+                        <button class="btn-success w-100 :effect" action="voteClick" for="<?php echo $product["product_number"] ?>">VOTAR</button>
                     </div>
                 </div>
             <?php
