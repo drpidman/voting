@@ -36,8 +36,29 @@ async function voteClick(e) {
 
     const selectedItem = e.target.attributes.for.nodeValue;
 
-    vote_status.style.animation = "expand-fadein 0.3s forwards";
-    document.body.style.overflow = "hidden";
+    let form = new FormData();
+    form.append("id", 12)
+
+    fetch(voteStatus, {
+        method: "POST",
+        body: form
+    }).then(async (res) => {
+        const data = await res.json()
+
+        if (data.status) {
+            vote_status.innerHTML = `
+            <h1 style="font-size: 2rem;">Aguarde!</h1>
+            <p>Por favor, aguarde, vamos verificar se você possui mais votos disponiveis</p>`
+
+            vote_status.style.animation = "expand-fadein 0.3s forwards";
+            document.body.style.overflow = "hidden";
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000)
+        }
+
+    })
 
     /**
      * Pegar o nome de usuario do elemento filho do container vote_user.

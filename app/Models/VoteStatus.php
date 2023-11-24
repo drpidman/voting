@@ -48,6 +48,7 @@ class VoteStatusModel extends Connection
             $user->name = "empt";
             $user->cpf = "empt";
         }
+        
 
         $stmt = $conn->prepare("UPDATE vote_status SET status = :status, user = :user, cpf = :cpf WHERE id = :id");
         $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);

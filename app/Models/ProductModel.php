@@ -53,15 +53,14 @@ class ProductModelVotes extends Connection
      * @param String $product_name Nome do produto que sera 
      * buscado os votos
      */
-    public function setVotes(int $vote_num, String $product_name)
+    public function setVotes(String $product_name)
     {
         $conn = $this->connect();
 
         $sql =
-            "UPDATE products SET votes = :vote_num WHERE name = :product_name";
+            "UPDATE products SET votes = products.votes + 1 WHERE name = :product_name";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":vote_num", $vote_num);
         $stmt->bindParam(":product_name", $product_name);
 
         if ($stmt->execute()) {
@@ -202,7 +201,7 @@ class ProductModel extends ProductModelVotes
         $conn = $this->connect();
 
         $sql =
-            "SELECT name,
+            "SELECT name AS product_name,
             description,
             number,
             image,
@@ -212,7 +211,7 @@ class ProductModel extends ProductModelVotes
         $stmt->bindParam(":product_number", $product_number);
         $stmt->execute();
 
-        $product = $stmt->fetch(PDO::FETCH_OBJ);
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $conn = null;
 

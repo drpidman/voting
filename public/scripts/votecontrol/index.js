@@ -6,6 +6,7 @@ socket.onerror = function (err) {
 
 socket.onmessage = async function (e) {
     const data = JSON.parse(e.data);
+    console.log(data)
 
     if (data.type == "vote") {
         let voteData = new FormData();
@@ -140,6 +141,14 @@ window.onload = function () {
                     <p>Usuario: ${data.user}</p>
                     <p>CPF: ${data.cpf}</p>
                 `
+
+            socket.send(JSON.stringify({
+                type: "allow-vote",
+                user: {
+                    name: data.user,
+                    cpf: data.cpf
+                }
+            }));
         }
     })
 }

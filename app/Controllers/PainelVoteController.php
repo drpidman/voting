@@ -57,25 +57,27 @@ class PainelVoteController implements Controller
         $username = filter_input(INPUT_POST, "user_name", FILTER_DEFAULT);
         $surname = filter_input(INPUT_POST, "user_surname", FILTER_DEFAULT);
         $cpf = filter_input(INPUT_POST, "user_cpf", FILTER_DEFAULT);
-
         $complete_name = $username . " " . $surname;
 
         $userModel = new UserModel();
         $user = new UserVote();
+
         $user->name = $complete_name;
         $user->cpf = $cpf;
 
-        if ($userModel->exists($user->cpf)) {
-            echo json_encode($userModel->new($user));
+        if (!$userModel->exists($user->cpf)) {
+            $userModel->new($user);
+
+            echo json_encode($userModel->getByCpf($user->cpf));
             return;
-        }
-
-        $user_search = $userModel->getByCpf($user->cpf);
-
-        if ($user_search->name === $user->name || $user_search->cpf === $user->cpf) {
-            echo json_encode(["message" => "Usuario já foi registrado, consequentemente já computou um voto."]);
-
-            http_response_code(401);
+        } else {
+             echo json_encode(
+                [
+                    "message" => "Usuario já foi registrado, consequentemente já computou um voto.", 
+                    "user" => $userModel->getByCpf($user->cpf)
+                ]
+            );
+             http_response_code(401);
         }
     }
 
@@ -116,18 +118,26 @@ class PainelVoteController implements Controller
         $user_cpf = filter_input(INPUT_POST, "user_cpf", FILTER_DEFAULT);
 
         $productModel = new ProductModel();
-        $product = $productModel->getByNumber($product_number);
-
-        $result = $productModel->setVotes($product->product_votes + 1, $product->product_name);
-
         $status = new VoteStatusModel();
         $userModel = new UserModel();
 
-        $status->updateStatus(12, false, $userModel->getByCpf($user_cpf));
+        $product = $productModel->getByNumber($product_number);
+        $user = $userModel->getByCpf($user_cpf); 
+
+        $user_fixed = new UserVote();
+        $user_fixed->name = $user->name;
+        $user_fixed->cpf = $user->cpf;
+
+        $vote_result = $productModel->setVotes($product["product_name"]);
+        $userModel->subVotes($user->id);
+
+        if ($user->allowed_votes <= 1) {
+            $status->updateStatus(12, false, $user_fixed);
+        }
 
         echo json_encode([
             "status" => "vote-success",
-            $result
+            $vote_result
         ]);
     }
 

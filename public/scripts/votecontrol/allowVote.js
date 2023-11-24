@@ -64,6 +64,8 @@ async function allowVote(e) {
 
         if (res.ok) {
             const data = await res.json();
+            
+            console.log(data)
             vote_status.style.animation = "expand-fadein 0.3s forwards";
             document.body.style.overflow = "hidden";
 
