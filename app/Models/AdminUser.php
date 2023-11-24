@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use mysqli;
+use PDO;
 
 class UserAdmin
 {
@@ -12,33 +13,31 @@ class UserAdmin
 
 class AdminUser extends Connection
 {
-    public function setUser(String $email, String $password)
+    public function setUser(string $email, string $password)
     {
         $user = new UserAdmin();
         $user->username = $email;
         $user->password = $password;
-
+    
         return $user;
     }
-
-    public function getUser(String $email, String $password)
+    
+    public function getUser(string $email, string $password)
     {
         $conn = $this->connect();
-
-        $sql = "SELECT email, password FROM admins WHERE email=?";
+    
+        $sql = "SELECT email, password FROM admins WHERE email=:email";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $email);
-
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
-        $stmt->bind_result($username, $pass);
-
-        if ($stmt->fetch()) {
-            return $this->setUser($username, $pass);
+    
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result) {
+            return $this->setUser($result['email'], $result['password']);
         } else {
             return null;
         }
-
-        $stmt->close();
-        $conn->close();
     }
+    
 }

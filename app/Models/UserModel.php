@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use mysqli;
+use PDO;
 
 class UserVote
 {
@@ -15,58 +16,48 @@ class UserModel extends Connection
     public function new(UserVote $user)
     {
         $conn = $this->connect();
-
-        $sql =
-            "INSERT INTO users(name, cpf) VALUES(?, ?)";
-
+    
+        $sql = "INSERT INTO users(name, cpf) VALUES(:name, :cpf)";
+    
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param(
-            "ss",
-            $user->name,
-            $user->cpf
-        );
-
+        $stmt->bindParam(':name', $user->name);
+        $stmt->bindParam(':cpf', $user->cpf);
+    
         if ($stmt->execute()) {
+            $conn = null;
             return $this->getByCpf($user->cpf);
         }
-
-        $stmt->close();
-        $conn->close();
+    
+        return null;
     }
-
-    public function getByCpf(String $cpf)
+    
+    public function getByCpf(string $cpf)
     {
         $conn = $this->connect();
-
-        $sql =
-            "SELECT name, cpf FROM users WHERE cpf = ?";
-
+    
+        $sql = "SELECT name, cpf FROM users WHERE cpf = :cpf";
+    
         $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param("s", $cpf);
-
+        $stmt->bindParam(':cpf', $cpf);
         $stmt->execute();
-        $stmt->bind_result($name, $ucpf);
-
-        if ($stmt->fetch()) {
+    
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result) {
             $user = new UserVote();
-            $user->name = $name;
-            $user->cpf = $ucpf;
-
+            $user->name = $result['name'];
+            $user->cpf = $result['cpf'];
+            
+            $conn = null;
             return $user;
-        } else {
-            return null;
         }
-
-        $stmt->close();
-        $conn->close();
+    
+        return null;
     }
-
-
-
-    public function exists(String $cpf)
+    
+    public function exists(string $cpf)
     {
         $user = $this->getByCpf($cpf);
-        return !isset($user);
-    }
+        return $user !== null;
+    }    
 }

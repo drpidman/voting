@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Exception;
 use mysqli;
+use PDO;
 
 class VoteStatus
 {
@@ -20,20 +21,23 @@ class VoteStatusModel extends Connection
     {
         $conn = $this->connect();
 
-        $stmt = $conn->prepare("SELECT status, user, cpf FROM vote_status WHERE id = ?");
-        $stmt->bind_param("s", $id);
-
+        $stmt = $conn->prepare("SELECT status, user, cpf FROM vote_status WHERE id = :status_id");
+        $stmt->bindParam(":status_id", $id);
         $stmt->execute();
-        $stmt->bind_result($status, $user, $cpf);
 
-        if ($stmt->fetch()) {
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
             $vote_status = new VoteStatus();
-            $vote_status->status = $status;
-            $vote_status->user = $user;
-            $vote_status->cpf = $cpf;
+            $vote_status->status = $result['status'];
+            $vote_status->user = $result['user'];
+            $vote_status->cpf = $result['cpf'];
 
+            $conn = null;
             return $vote_status;
         }
+
+        return null;
     }
 
     public function updateStatus(int $id, bool $status, UserVote $user)
@@ -45,22 +49,19 @@ class VoteStatusModel extends Connection
             $user->cpf = "empt";
         }
 
-        $stmt = $conn->prepare("UPDATE vote_status SET status = ?, user = ?, cpf = ? WHERE id = ?");
-        $stmt->bind_param(
-            "ssss",
-            $status,
-            $user->name,
-            $user->cpf,
-            $id
-        );
+        $stmt = $conn->prepare("UPDATE vote_status SET status = :status, user = :user, cpf = :cpf WHERE id = :id");
+        $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);
+        $stmt->bindParam(':user', $user->name);
+        $stmt->bindParam(':cpf', $user->cpf);
+        $stmt->bindParam(':id', $id);
 
         $stmt->execute();
 
-        try {
-            if ($stmt->fetch()) {
-                return $this->getStatus($id);
-            }
-        } catch (Exception $e) {
+        $result = $this->getStatus($id);
+
+        if ($result) {
+            return $result;
+        } else {
             return json_last_error_msg();
         }
     }
