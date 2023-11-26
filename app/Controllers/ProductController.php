@@ -87,9 +87,7 @@ class ProductController
         }
 
         $product_name = $_POST["product_name"];
-
         $product = $products->getByName($product_name);
-
 
         if (!isset($product)) {
             echo json_encode([
@@ -101,7 +99,7 @@ class ProductController
         }
 
         $deleted_product = $products->delete($product);
-
+        
         echo json_encode([
             "status" => 200,
             "deleted" => $deleted_product

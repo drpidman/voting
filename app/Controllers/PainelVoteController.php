@@ -21,13 +21,11 @@ class PainelVoteController implements Controller
     {
         $homepage = $routes->get('homepage')->getPath();
         $allowvote = $routes->get('painel-vote-control-allow')->getPath();
-
         /**
          * Rotas com user_session requerem que as requisições sejam autenticadas, isso é:
          * Usuario administrador fez login.
          */
         $user_session = $_SESSION['user'];
-
         /**
          * Validar se existe valores em $_SESSION['user'] e redirecionar caso não exista.
          */
@@ -67,8 +65,8 @@ class PainelVoteController implements Controller
 
         if (!$userModel->exists($user->cpf)) {
             $userModel->new($user);
-
             echo json_encode($userModel->getByCpf($user->cpf));
+            
             return;
         } else {
              echo json_encode(
@@ -118,12 +116,15 @@ class PainelVoteController implements Controller
         $user_cpf = filter_input(INPUT_POST, "user_cpf", FILTER_DEFAULT);
 
         $productModel = new ProductModel();
-        $status = new VoteStatusModel();
+        $statusModel = new VoteStatusModel();
         $userModel = new UserModel();
 
         $product = $productModel->getByNumber($product_number);
         $user = $userModel->getByCpf($user_cpf); 
 
+        /*
+        * Solução temporaria até completar a nova estrutura
+        */
         $user_fixed = new UserVote();
         $user_fixed->name = $user->name;
         $user_fixed->cpf = $user->cpf;
@@ -132,7 +133,7 @@ class PainelVoteController implements Controller
         $userModel->subVotes($user->id);
 
         if ($user->allowed_votes <= 1) {
-            $status->updateStatus(12, false, $user_fixed);
+            $statusModel->updateStatus(12, false, $user_fixed);
         }
 
         echo json_encode([
@@ -155,10 +156,10 @@ class PainelVoteController implements Controller
         }
 
         $id = $_POST['id'];
+        $statusModel = new VoteStatusModel();
+        $status = $statusModel->getStatus($id);
 
-        $status = new VoteStatusModel();
-
-        echo json_encode($status->getStatus($id));
+        echo json_encode($status);
     }
 
     /**

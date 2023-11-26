@@ -20,7 +20,7 @@ class UserModel extends Connection
         $conn = $this->connect();
 
         $sql =
-            "BEGIN;
+        "BEGIN;
         INSERT INTO users(name, cpf) VALUES(:name, :cpf);
         INSERT INTO userallowedvotes(user_id) VALUES(LAST_INSERT_ID());
         COMMIT;
@@ -58,9 +58,10 @@ class UserModel extends Connection
     public function subVotes(int $user_id) {
         $conn = $this->connect();
 
-        $sql = "UPDATE UserAllowedVotes 
-        SET allowed_votes = UserAllowedVotes.allowed_votes -1 
-        WHERE user_id = :user_id
+        $sql = 
+        " UPDATE UserAllowedVotes 
+          SET allowed_votes = UserAllowedVotes.allowed_votes -1 
+          WHERE user_id = :user_id;
         ";
 
         $stmt = $conn->prepare($sql);

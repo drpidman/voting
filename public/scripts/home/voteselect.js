@@ -23,7 +23,6 @@ socket.onmessage = function (e) {
                 <span id="user-query-cpf">CPF: ${data.user.cpf}</span>
         </div>
         `;
-
     }
 }
 
