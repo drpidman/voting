@@ -11,72 +11,13 @@ class Product
     public $product_description;
     public $product_number;
     public $product_image;
-    public $product_votes;
 };
 
-/**
- * Classe para gerenciar os votos dos produtos
- */
-class ProductModelVotes extends Connection
-{
-    /**
-     * Buscar os votos de um produto pelo nome recebe
-     * @param String $product_name Nome do produto que sera 
-     * buscado os votos
-     */
-    public function getVotes(string $product_name)
-    {
-        $conn = $this->connect();
-
-        $sql = "SELECT votes FROM products WHERE name = :product_name";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':product_name', $product_name);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            $product = new Product();
-            $product->product_votes = $result['votes'];
-            $conn = null;
-            return $product;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * "Setar" os votos de um produto pelo nome recebe
-     * @param int $vote_num Numero de votos a serem inseridos no produto buscado
-     * pelo nome
-     * @param String $product_name Nome do produto que sera 
-     * buscado os votos
-     */
-    public function setVotes(String $product_name)
-    {
-        $conn = $this->connect();
-
-        $sql =
-            "UPDATE products SET votes = products.votes + 1 WHERE name = :product_name";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":product_name", $product_name);
-
-        if ($stmt->execute()) {
-            $conn = null;
-            $product = new ProductModel();
-            return $product->getByName($product_name);
-        } else {
-            return null;
-        }
-    }
-}
 
 /**
  * Classe para gerenciar o produto
  */
-class ProductModel extends ProductModelVotes
+class ProductModel extends Connection
 {
     /**
      * Criar um novo produto recebe
@@ -87,19 +28,19 @@ class ProductModel extends ProductModelVotes
     {
         $conn = $this->connect();
 
-        $sql = "INSERT INTO products(name,
+        $sql = "INSERT INTO products(
+             name,
              description,
              number,
-             image,
-             votes
-            ) VALUES(:product_name, :product_description, :product_number, :product_image, :product_votes)";
+             image
+            ) 
+            VALUES(:product_name, :product_description, :product_number, :product_image)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':product_name', $product->product_name);
         $stmt->bindParam(':product_description', $product->product_description);
         $stmt->bindParam(':product_number', $product->product_number);
         $stmt->bindParam(':product_image', $product->product_image);
-        $stmt->bindParam(':product_votes', $product->product_votes);
 
         if ($stmt->execute()) {
             $newProductId = $conn->lastInsertId();
@@ -146,8 +87,8 @@ class ProductModel extends ProductModelVotes
             "SELECT name,
             description,
             number,
-            image,
-            votes FROM products WHERE id = :product_id";
+            image
+            FROM products WHERE id = :product_id";
 
         $stmt = $conn->prepare($sql);
 
@@ -174,8 +115,8 @@ class ProductModel extends ProductModelVotes
             "SELECT name,
             description,
             number,
-            image,
-            votes FROM products WHERE name = :product_name";
+            image
+            FROM products WHERE name = :product_name";
 
         $stmt = $conn->prepare($sql);
 
@@ -201,11 +142,12 @@ class ProductModel extends ProductModelVotes
         $conn = $this->connect();
 
         $sql =
-            "SELECT name AS product_name,
+            "SELECT id AS product_id, 
+            name AS product_name,
             description,
             number,
-            image,
-            votes FROM products WHERE number = :product_number";
+            image
+            FROM products WHERE number = :product_number";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":product_number", $product_number);
@@ -228,8 +170,8 @@ class ProductModel extends ProductModelVotes
         $sql = "SELECT name AS product_name,
             description AS product_description,
             number AS product_number,
-            image AS product_image,
-            votes FROM products";
+            image AS product_image
+            FROM products";
 
         $stmt = $conn->prepare($sql);
 

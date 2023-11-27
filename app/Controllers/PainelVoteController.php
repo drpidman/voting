@@ -2,13 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Models\History;
 use App\Models\Product;
 use App\Models\ProductModel;
 use App\Models\UserModel;
 use App\Models\UserVote;
+use App\Models\VotesHistory as ModelsVotesHistory;
 use App\Models\VoteStatus;
 use App\Models\VoteStatusModel;
 use Symfony\Component\Routing\RouteCollection;
+use VotesHistory;
 
 session_start();
 
@@ -118,10 +121,10 @@ class PainelVoteController implements Controller
         $productModel = new ProductModel();
         $statusModel = new VoteStatusModel();
         $userModel = new UserModel();
+        $historyModel = new ModelsVotesHistory();
 
         $product = $productModel->getByNumber($product_number);
         $user = $userModel->getByCpf($user_cpf); 
-
         /*
         * Solução temporaria até completar a nova estrutura
         */
@@ -129,16 +132,18 @@ class PainelVoteController implements Controller
         $user_fixed->name = $user->name;
         $user_fixed->cpf = $user->cpf;
 
-        $vote_result = $productModel->setVotes($product["product_name"]);
-        $userModel->subVotes($user->id);
+        $history = new History();
+        $history->product_id = $product["product_id"];
+        $history->user_id = $user->user_id;
+        $historyModel->new($history);
 
-        if ($user->allowed_votes <= 1) {
+        if ($historyModel->getUserVotes($user->user_id)->votes_time >= 2) {
             $statusModel->updateStatus(12, false, $user_fixed);
         }
 
         echo json_encode([
             "status" => "vote-success",
-            $vote_result
+            $productModel->getByNumber($product_number)
         ]);
     }
 
@@ -189,7 +194,6 @@ class PainelVoteController implements Controller
         $username = filter_input(INPUT_POST, "user_name", FILTER_DEFAULT);
         $surname = filter_input(INPUT_POST, "user_surname", FILTER_DEFAULT);
         $cpf = filter_input(INPUT_POST, "user_cpf", FILTER_DEFAULT);
-
         $complete_name = $username . " " . $surname;
 
         $user->name = $complete_name;

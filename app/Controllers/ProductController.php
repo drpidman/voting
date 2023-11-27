@@ -56,7 +56,6 @@ class ProductController
         $product->product_description = $product_description;
         $product->product_number = $product_number;
         $product->product_image = $url;
-        $product->product_votes = 0;
 
         $products->new($product);
 

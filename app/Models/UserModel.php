@@ -20,11 +20,7 @@ class UserModel extends Connection
         $conn = $this->connect();
 
         $sql =
-        "BEGIN;
-        INSERT INTO users(name, cpf) VALUES(:name, :cpf);
-        INSERT INTO userallowedvotes(user_id) VALUES(LAST_INSERT_ID());
-        COMMIT;
-        ";
+        " INSERT INTO users(name, cpf) VALUES(:name, :cpf) ";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $user->name);
@@ -41,9 +37,7 @@ class UserModel extends Connection
     {
         $conn = $this->connect();
 
-        $sql = "SELECT Users.id, Users.name, Users.cpf, allvts.allowed_votes FROM Users
-        INNER JOIN UserAllowedVotes allvts
-         ON Users.id = allvts.user_id 
+        $sql = "SELECT Users.id AS user_id, Users.name, Users.cpf FROM Users
         WHERE cpf = :cpf";
 
         $stmt = $conn->prepare($sql);
@@ -53,20 +47,6 @@ class UserModel extends Connection
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         
         return $result ? $result : null;
-    }
-
-    public function subVotes(int $user_id) {
-        $conn = $this->connect();
-
-        $sql = 
-        " UPDATE UserAllowedVotes 
-          SET allowed_votes = UserAllowedVotes.allowed_votes -1 
-          WHERE user_id = :user_id;
-        ";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":user_id", $user_id);
-        $stmt->execute();
     }
 
     public function exists(string $cpf)

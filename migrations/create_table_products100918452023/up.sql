@@ -7,3 +7,6 @@ CREATE TABLE `voting_sys`.`products` (
     `votes` INT NOT NULL COMMENT 'NUM. DE VOTOS DO PRODUTO',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB CHARSET = utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT = 'TABELA DE PRODUTOS';
+
+
+ALTER TABLE products DROP COLUMN votes;

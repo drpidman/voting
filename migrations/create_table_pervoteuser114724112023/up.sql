@@ -5,3 +5,5 @@ CREATE TABLE IF NOT EXISTS UserAllowedVotes(
 
     FOREIGN KEY (user_id) REFERENCES Users(id AS user_id)
 )
+
+DROP TABLE userallowedvotes;
