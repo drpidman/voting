@@ -7,27 +7,34 @@ use PDO;
 
 class UserVote
 {
-    public $id;
-    public $name;
-    public $cpf;
-    public $allowedvotes;
+    public $user_id;
+    public $user_name;
+    public $user_cpf;
 };
 
 class UserModel extends Connection
 {
+
+    public const TABLE_NAME = "Users";
+    public const COLUMN_USER_ID = "user_id";
+    public const COLUMN_USER_NAME = "user_name";
+    public const COLUMN_USER_CPF = "user_cpf";
+
     public function new(UserVote $user)
     {
         $conn = $this->connect();
 
         $sql =
-        " INSERT INTO users(name, cpf) VALUES(:name, :cpf) ";
+            " INSERT INTO " . self::TABLE_NAME . "(" . self::COLUMN_USER_NAME . "," .
+            self::COLUMN_USER_CPF . ")" .
+            " VALUES(:name, :cpf)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':name', $user->name);
-        $stmt->bindParam(':cpf', $user->cpf);
+        $stmt->bindParam(':name', $user->user_name);
+        $stmt->bindParam(':cpf', $user->user_cpf);
 
         if ($stmt->execute()) {
-            return $this->getByCpf($user->cpf);
+            return $this->getByCpf($user->user_cpf);
         }
 
         return null;
@@ -37,15 +44,17 @@ class UserModel extends Connection
     {
         $conn = $this->connect();
 
-        $sql = "SELECT Users.id AS user_id, Users.name, Users.cpf FROM Users
-        WHERE cpf = :cpf";
+        $sql = "SELECT " . self::COLUMN_USER_ID . ","
+            . self::COLUMN_USER_NAME . ","
+            . self::COLUMN_USER_CPF . " FROM " . self::TABLE_NAME .
+            " WHERE " . self::COLUMN_USER_CPF . "=:cpf";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':cpf', $cpf);
         $stmt->execute();
 
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
-        
+        $result = $stmt->fetchObject("App\Models\UserVote");
+
         return $result ? $result : null;
     }
 

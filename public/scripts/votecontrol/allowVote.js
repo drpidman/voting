@@ -71,15 +71,15 @@ async function allowVote(e) {
 
             vote_status.innerHTML += `
                     <h1 style="font-size: 2rem">Agurdando voto</h1>
-                    <p>Usuario: ${data.name}</p>
-                    <p>CPF: ${data.cpf}</p>
+                    <p>Usuario: ${data.user_name}</p>
+                    <p>CPF: ${data.user_cpf}</p>
                 `
 
             socket.send(JSON.stringify({
                 type: "allow-vote",
                 user: {
-                    name: data.name,
-                    cpf: data.cpf
+                    name: data.user_name,
+                    cpf: data.user_cpf
                 }
             }));
             

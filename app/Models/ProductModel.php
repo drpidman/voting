@@ -7,6 +7,7 @@ use PDO;
 
 class Product
 {
+    public $product_id;
     public $product_name;
     public $product_description;
     public $product_number;
@@ -19,6 +20,14 @@ class Product
  */
 class ProductModel extends Connection
 {
+
+    public const TABLE_NAME = "Products";
+    public const COLUMN_PRODUCT_ID = "product_id";
+    public const COLUMN_PRODUCT_NAME = "product_name";
+    public const COLUMN_PRODUCT_DESCRIPTION = "product_description";
+    public const COLUMN_PRODUCT_NUMBER = "product_number";
+    public const COLUMN_PRODUCT_IMAGE = "product_image";
+
     /**
      * Criar um novo produto recebe
      * @param \App\Models\Product $product Objeto produto 
@@ -28,13 +37,15 @@ class ProductModel extends Connection
     {
         $conn = $this->connect();
 
-        $sql = "INSERT INTO products(
-             name,
-             description,
-             number,
-             image
-            ) 
-            VALUES(:product_name, :product_description, :product_number, :product_image)";
+        $sql =
+            "INSERT INTO " . self::TABLE_NAME
+            . "(" .
+            self::COLUMN_PRODUCT_NAME . "," .
+            self::COLUMN_PRODUCT_DESCRIPTION . "," .
+            self::COLUMN_PRODUCT_NUMBER . "," .
+            self::COLUMN_PRODUCT_IMAGE
+            . ")" .
+            "VALUES(:product_name, :product_description, :product_number, :product_image)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':product_name', $product->product_name);
@@ -61,7 +72,8 @@ class ProductModel extends Connection
     {
         $conn = $this->connect();
 
-        $sql = "DELETE FROM products WHERE name = :product_name";
+        $sql = "DELETE FROM " . self::TABLE_NAME .
+            " WHERE " . self::COLUMN_PRODUCT_NAME . "=:product_name";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':product_name', $product->product_name);
@@ -84,11 +96,12 @@ class ProductModel extends Connection
         $conn = $this->connect();
 
         $sql =
-            "SELECT name,
-            description,
-            number,
-            image
-            FROM products WHERE id = :product_id";
+            "SELECT " . self::COLUMN_PRODUCT_NAME  . "," .
+            self::COLUMN_PRODUCT_DESCRIPTION . "," .
+            self::COLUMN_PRODUCT_NUMBER . "," .
+            self::COLUMN_PRODUCT_IMAGE .
+            " FROM " . self::TABLE_NAME .
+            " WHERE " . self::COLUMN_PRODUCT_ID . "=:product_id";
 
         $stmt = $conn->prepare($sql);
 
@@ -112,18 +125,19 @@ class ProductModel extends Connection
         $conn = $this->connect();
 
         $sql =
-            "SELECT name,
-            description,
-            number,
-            image
-            FROM products WHERE name = :product_name";
+            "SELECT " . self::COLUMN_PRODUCT_NAME  . "," .
+            self::COLUMN_PRODUCT_DESCRIPTION . "," .
+            self::COLUMN_PRODUCT_NUMBER . "," .
+            self::COLUMN_PRODUCT_IMAGE .
+            " FROM " . self::TABLE_NAME .
+            " WHERE " . self::COLUMN_PRODUCT_NAME . "=:product_name";
 
         $stmt = $conn->prepare($sql);
 
         $stmt->bindParam(":product_name", $product_name);
         $stmt->execute();
 
-        $product = $stmt->fetch(PDO::FETCH_OBJ);
+        $product = $stmt->fetchObject("App\Models\Product");
 
         $conn = null;
 
@@ -142,18 +156,20 @@ class ProductModel extends Connection
         $conn = $this->connect();
 
         $sql =
-            "SELECT id AS product_id, 
-            name AS product_name,
-            description,
-            number,
-            image
-            FROM products WHERE number = :product_number";
+            "SELECT " . self::COLUMN_PRODUCT_ID . ","
+            . self::COLUMN_PRODUCT_NAME  . "," 
+            . self::COLUMN_PRODUCT_DESCRIPTION . "," 
+            . self::COLUMN_PRODUCT_NUMBER . "," 
+            . self::COLUMN_PRODUCT_IMAGE .
+            " FROM " . self::TABLE_NAME .
+            " WHERE " . self::COLUMN_PRODUCT_NUMBER . "=:product_number";
+
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":product_number", $product_number);
         $stmt->execute();
 
-        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        $product = $stmt->fetchObject("App\Models\Product");
 
         $conn = null;
 
@@ -167,14 +183,14 @@ class ProductModel extends Connection
     {
         $conn = $this->connect();
 
-        $sql = "SELECT name AS product_name,
-            description AS product_description,
-            number AS product_number,
-            image AS product_image
-            FROM products";
+        $sql =
+            "SELECT " . self::COLUMN_PRODUCT_NAME  . "," .
+            self::COLUMN_PRODUCT_DESCRIPTION . "," .
+            self::COLUMN_PRODUCT_NUMBER . "," .
+            self::COLUMN_PRODUCT_IMAGE .
+            " FROM " . self::TABLE_NAME;
 
         $stmt = $conn->prepare($sql);
-
         $stmt->execute();
 
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);

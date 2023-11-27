@@ -133,20 +133,20 @@ window.onload = function () {
         const data = await res.json();
         console.log(data);
 
-        if (data.status) {
+        if (data != null && data.status) {
             vote_status.style.animation = "expand-fadein 0.3s forwards";
 
             vote_status.innerHTML = `
                     <h1 style="font-size: 2rem">Agurdando voto</h1>
-                    <p>Usuario: ${data.user}</p>
-                    <p>CPF: ${data.cpf}</p>
+                    <p>Usuario: ${data.status_username}</p>
+                    <p>CPF: ${data.status_usercpf}</p>
                 `
 
             socket.send(JSON.stringify({
                 type: "allow-vote",
                 user: {
-                    name: data.user,
-                    cpf: data.cpf
+                    name: data.status_username,
+                    cpf: data.status_usercpf
                 }
             }));
         }

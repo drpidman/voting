@@ -63,19 +63,19 @@ class PainelVoteController implements Controller
         $userModel = new UserModel();
         $user = new UserVote();
 
-        $user->name = $complete_name;
-        $user->cpf = $cpf;
+        $user->user_name = $complete_name;
+        $user->user_cpf = $cpf;
 
-        if (!$userModel->exists($user->cpf)) {
+        if (!$userModel->exists($user->user_cpf)) {
             $userModel->new($user);
-            echo json_encode($userModel->getByCpf($user->cpf));
+            echo json_encode($userModel->getByCpf($user->user_cpf));
             
             return;
         } else {
              echo json_encode(
                 [
                     "message" => "Usuario já foi registrado, consequentemente já computou um voto.", 
-                    "user" => $userModel->getByCpf($user->cpf)
+                    "user" => $userModel->getByCpf($user->user_cpf)
                 ]
             );
              http_response_code(401);
@@ -125,20 +125,14 @@ class PainelVoteController implements Controller
 
         $product = $productModel->getByNumber($product_number);
         $user = $userModel->getByCpf($user_cpf); 
-        /*
-        * Solução temporaria até completar a nova estrutura
-        */
-        $user_fixed = new UserVote();
-        $user_fixed->name = $user->name;
-        $user_fixed->cpf = $user->cpf;
 
         $history = new History();
-        $history->product_id = $product["product_id"];
+        $history->product_id = $product->product_id;
         $history->user_id = $user->user_id;
         $historyModel->new($history);
 
         if ($historyModel->getUserVotes($user->user_id)->votes_time >= 2) {
-            $statusModel->updateStatus(12, false, $user_fixed);
+            $statusModel->updateStatus(12, false, $user->user_id);
         }
 
         echo json_encode([
@@ -162,7 +156,7 @@ class PainelVoteController implements Controller
 
         $id = $_POST['id'];
         $statusModel = new VoteStatusModel();
-        $status = $statusModel->getStatus($id);
+        $status = $statusModel->getStatusAll($id);
 
         echo json_encode($status);
     }
@@ -186,6 +180,7 @@ class PainelVoteController implements Controller
         }
 
         $status = new VoteStatusModel();
+        $userModel = new UserModel();
         $user = new UserVote();
 
         $id = $_POST['id'];
@@ -196,9 +191,10 @@ class PainelVoteController implements Controller
         $cpf = filter_input(INPUT_POST, "user_cpf", FILTER_DEFAULT);
         $complete_name = $username . " " . $surname;
 
-        $user->name = $complete_name;
-        $user->cpf = $cpf;
-        
-        echo json_encode($status->updateStatus($id, $vote_status, $user));
+        $user->user_name = $complete_name;
+        $user->user_cpf = $cpf;
+
+
+        echo json_encode($status->updateStatus($id, $vote_status, $userModel->getByCpf($cpf)->user_id));
     }
 }

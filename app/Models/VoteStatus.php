@@ -8,62 +8,86 @@ use PDO;
 
 class VoteStatus
 {
-    public $id;
+    public $status_id;
+    public $status_username;
+    public $status_usercpf;
     public $status;
-    public $user;
-    public $cpf;
 }
 
 
 class VoteStatusModel extends Connection
 {
-    public function getStatus(int $id)
-    {
+
+    public const TABLE_NAME = "vote_status";
+    public const EXTRA_TABLENAME_USER = "usr";
+
+    public const COLUMN_STATUS_ID = "status_id";
+    public const COLUMN_STATUS = "status";
+    public const COLUMN_USER_ID = "user_id";
+
+    public const EXTRA_COLUMN_STATUS_NAME = "status_username";
+    public const EXTRA_COLUMN_STATUS_CPF = "status_usercpf";
+
+    public function getStatus(int $id) {
         $conn = $this->connect();
 
-        $stmt = $conn->prepare("SELECT status, user, cpf FROM vote_status WHERE id = :status_id");
+        $sql = "SELECT " . self::COLUMN_STATUS 
+            . " FROM " . self::TABLE_NAME
+            . " WHERE " . self::COLUMN_STATUS_ID . "=:status_id";
+
+        $stmt = $conn->prepare($sql);
         $stmt->bindParam(":status_id", $id);
         $stmt->execute();
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchObject("App\Models\VoteStatus");
 
-        if ($result) {
-            $vote_status = new VoteStatus();
-            $vote_status->status = $result['status'];
-            $vote_status->user = $result['user'];
-            $vote_status->cpf = $result['cpf'];
-
-            $conn = null;
-            return $vote_status;
-        }
-
-        return null;
+        return $result ? $result : null;
     }
 
-    public function updateStatus(int $id, bool $status, UserVote $user)
+    public function getStatusAll(int $id)
     {
         $conn = $this->connect();
 
-        if ($this->getStatus($id)->status) {
-            $user->name = "empt";
-            $user->cpf = "empt";
-        }
-        
+        $sql = "SELECT " . self::COLUMN_STATUS . ","
+            . self::EXTRA_TABLENAME_USER . "." . UserModel::COLUMN_USER_NAME . " AS " . self::EXTRA_COLUMN_STATUS_NAME . ","
+            . self::EXTRA_TABLENAME_USER . "." . UserModel::COLUMN_USER_CPF . " AS " . self::EXTRA_COLUMN_STATUS_CPF
 
-        $stmt = $conn->prepare("UPDATE vote_status SET status = :status, user = :user, cpf = :cpf WHERE id = :id");
+            . " FROM " . self::TABLE_NAME
+            . " INNER JOIN " . UserModel::TABLE_NAME . " " . self::EXTRA_TABLENAME_USER
+            . " ON " . self::TABLE_NAME . "." . self::COLUMN_USER_ID . "=" . self::EXTRA_TABLENAME_USER . "." . UserModel::COLUMN_USER_ID
+            . " WHERE " . self::COLUMN_STATUS_ID . "=:status_id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":status_id", $id);
+        $stmt->execute();
+
+        $result = $stmt->fetchObject("App\Models\VoteStatus");
+
+        return $result ? $result : null;
+    }
+
+    public function updateStatus(int $id, bool $status, int $user_id)
+    {
+        $conn = $this->connect();
+
+        $sql = "UPDATE " . self::TABLE_NAME . " SET "
+            . self::COLUMN_STATUS . "=:status,"
+            . self::COLUMN_USER_ID . "=:userid" .
+            " WHERE " . self::COLUMN_STATUS_ID . "=:id";
+
+        $stmt = $conn->prepare($sql);
         $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);
-        $stmt->bindParam(':user', $user->name);
-        $stmt->bindParam(':cpf', $user->cpf);
+
+        if ($this->getStatus($id)->status) {
+            $stmt->bindValue(':userid', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindParam(':userid', $user_id, PDO::PARAM_INT);
+        }
+
         $stmt->bindParam(':id', $id);
 
         $stmt->execute();
 
-        $result = $this->getStatus($id);
-
-        if ($result) {
-            return $result;
-        } else {
-            return json_last_error_msg();
-        }
+        return $this->getStatusAll($id);
     }
 }

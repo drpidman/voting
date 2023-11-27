@@ -15,6 +15,8 @@ socket.onmessage = function (e) {
         vote_status.style.animation = "hidden-fadeout  0.3s forwards";
         document.body.style.overflow = "";
 
+        console.log(data);
+
         vote_user.innerHTML = `
         <div class="container d-flex row">
                 <span>Nome: ${data.user.name}</span>
@@ -23,6 +25,8 @@ socket.onmessage = function (e) {
                 <span id="user-query-cpf">CPF: ${data.user.cpf}</span>
         </div>
         `;
+
+        // window.location.reload();
     }
 }
 
@@ -44,7 +48,7 @@ async function voteClick(e) {
     }).then(async (res) => {
         const data = await res.json()
 
-        if (data.status) {
+        if (data != null && data.status) {
             vote_status.innerHTML = `
             <h1 style="font-size: 2rem;">Aguarde!</h1>
             <p>Por favor, aguarde, vamos verificar se você possui mais votos disponiveis</p>`
@@ -52,7 +56,16 @@ async function voteClick(e) {
             vote_status.style.animation = "expand-fadein 0.3s forwards";
             document.body.style.overflow = "hidden";
 
-            setTimeout(() => {
+            vote_user.innerHTML = `
+            <div class="container d-flex row">
+                    <span>Nome: ${data.status_username}</span>
+            </div>
+            <div class="container d-flex row">
+                    <span>CPF: ${data.status_usercpf}</span>
+            </div>
+            `;
+
+            setTimeout(async () => {
                 window.location.reload();
             }, 3000)
         }
@@ -91,18 +104,20 @@ window.onload = function () {
         body: form
     }).then(async (res) => {
         const data = await res.json();
+        console.log(data);
 
-        if (data.status) {
+        if (data != null && data.status) {
             vote_status.style.animation = "hidden-fadeout 0.3s forwards";
 
             vote_user.innerHTML = `
-            <div class="container d-flex row">
-                    <span>Nome: ${data.user}</span>
-            </div>
-            <div class="container d-flex row">
-                    <span>CPF: ${data.cpf}</span>
-            </div>
-            `;
+                <div class="container d-flex row">
+                        <span>Nome: ${data.status_username}</span>
+                </div>
+                <div class="container d-flex row">
+                        <span>CPF: ${data.status_usercpf}</span>
+                </div>
+                `;
         }
+
     })
 }
