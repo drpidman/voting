@@ -1,10 +1,15 @@
 <?php
-
 namespace App\Models;
-
-use mysqli;
 use PDO;
 
+/**
+ * Propriedades de produto
+ * @var $product_id
+ * @var $product_image
+ * @var $product_description
+ * @var $product_number
+ * @var $product_image
+ */
 class Product
 {
     public $product_id;
@@ -14,10 +19,6 @@ class Product
     public $product_image;
 };
 
-
-/**
- * Classe para gerenciar o produto
- */
 class ProductModel extends Connection
 {
 
@@ -27,11 +28,11 @@ class ProductModel extends Connection
     public const COLUMN_PRODUCT_DESCRIPTION = "product_description";
     public const COLUMN_PRODUCT_NUMBER = "product_number";
     public const COLUMN_PRODUCT_IMAGE = "product_image";
-
     /**
-     * Criar um novo produto recebe
+     * Criar um novo produto
      * @param \App\Models\Product $product Objeto produto 
      * para criação
+     * @return Product||null
      */
     public function new(Product $product)
     {
@@ -56,17 +57,17 @@ class ProductModel extends Connection
         if ($stmt->execute()) {
             $newProductId = $conn->lastInsertId();
             $newProduct = $this->getById($newProductId);
-            $conn = null;
+            
             return $newProduct;
         }
 
         return null;
     }
-
     /**
-     * Deletar um produto recebe
-     * @param \App\Models\Product $product Objeto produto 
+     * Deletar um produto
+     * @param Product $product Objeto produto 
      * para deletar
+     * @return Product||null
      */
     public function delete(Product $product)
     {
@@ -78,18 +79,13 @@ class ProductModel extends Connection
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':product_name', $product->product_name);
 
-        if ($stmt->execute()) {
-            $conn = null;
-            return $product;
-        }
-
-        return null;
+        return $stmt->execute() ? $product : null;
     }
-
     /**
-     * Buscar um produto pelo nome recebe
-     * @param String $product_id Nome do produto que sera 
+     * Buscar um produto pelo id
+     * @param String $product_id id do produto que sera 
      * buscado
+     * @return Product||null
      */
     public function getById(int $product_id)
     {
@@ -104,21 +100,17 @@ class ProductModel extends Connection
             " WHERE " . self::COLUMN_PRODUCT_ID . "=:product_id";
 
         $stmt = $conn->prepare($sql);
-
         $stmt->bindParam(":product_id", $product_id);
         $stmt->execute();
 
         $product = $stmt->fetch(PDO::FETCH_OBJ);
-
-        $conn = null;
-
         return $product ? $product : null;
     }
-
     /**
-     * Buscar um produto pelo nome recebe
+     * Buscar um produto pelo nome
      * @param String $product_name Nome do produto que sera 
      * buscado
+     * @return Product||null
      */
     public function getByName(String $product_name)
     {
@@ -133,23 +125,19 @@ class ProductModel extends Connection
             " WHERE " . self::COLUMN_PRODUCT_NAME . "=:product_name";
 
         $stmt = $conn->prepare($sql);
-
         $stmt->bindParam(":product_name", $product_name);
         $stmt->execute();
-
         $product = $stmt->fetchObject("App\Models\Product");
-
-        $conn = null;
 
         return $product ? $product : null;
     }
-
     /**
-     * Buscar um produto pelo numero recebe
+     * Buscar um produto pelo numero
      * @param String $product_number Numero do produto que sera
      * buscado
      * 
      * Futuramente será mudado o tipo String para int.
+     * @return Product||null
      */
     public function getByNumber(String $product_number)
     {
@@ -164,20 +152,17 @@ class ProductModel extends Connection
             " FROM " . self::TABLE_NAME .
             " WHERE " . self::COLUMN_PRODUCT_NUMBER . "=:product_number";
 
-
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":product_number", $product_number);
         $stmt->execute();
 
         $product = $stmt->fetchObject("App\Models\Product");
 
-        $conn = null;
-
         return $product ? $product : null;
     }
-
     /**
-     * Buscar todos os produtos sem parametros
+     * Buscar todos os produtos
+     * @return Product[]
      */
     public function getAll()
     {
