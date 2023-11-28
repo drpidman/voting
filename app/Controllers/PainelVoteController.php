@@ -1,17 +1,12 @@
 <?php
-
 namespace App\Controllers;
-
 use App\Models\History;
-use App\Models\Product;
 use App\Models\ProductModel;
 use App\Models\UserModel;
 use App\Models\UserVote;
 use App\Models\VotesHistory as ModelsVotesHistory;
-use App\Models\VoteStatus;
 use App\Models\VoteStatusModel;
 use Symfony\Component\Routing\RouteCollection;
-use VotesHistory;
 
 session_start();
 

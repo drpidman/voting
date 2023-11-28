@@ -29,14 +29,12 @@ class Router
                     $param = (int) $param;
                 }
             });
-    
+            
             $className = '\\App\\Controllers\\' . $matcher['controller'];
             $classInstance = new $className();
     
             $params = array_merge(array_slice($matcher, 2, -1), array('routes' => $routes));
-
             call_user_func_array(array($classInstance, $matcher['method']), $params);
-            
         } catch (MethodNotAllowedException $e) {
             echo 'Route method is not allowed.';
         } catch (ResourceNotFoundException $e) {

@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Models;
+
 use PDO;
+use PDOException;
 
 /**
  * Propriedades de produto
@@ -57,7 +60,7 @@ class ProductModel extends Connection
         if ($stmt->execute()) {
             $newProductId = $conn->lastInsertId();
             $newProduct = $this->getById($newProductId);
-            
+
             return $newProduct;
         }
 
@@ -67,19 +70,36 @@ class ProductModel extends Connection
      * Deletar um produto
      * @param Product $product Objeto produto 
      * para deletar
-     * @return Product||null
+     * @return Product||PDOException||null
      */
     public function delete(Product $product)
     {
         $conn = $this->connect();
 
-        $sql = "DELETE FROM " . self::TABLE_NAME .
-            " WHERE " . self::COLUMN_PRODUCT_NAME . "=:product_name";
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':product_name', $product->product_name);
+        try {
+            $conn->beginTransaction();
 
-        return $stmt->execute() ? $product : null;
+            $sqlDeleteHistory = "DELETE FROM " . VotesHistory::TABLE_NAME .
+                " WHERE " . VotesHistory::COLUMN_PRODUCT_ID .  "=:product_id;";
+            $sqlDeleteProduct =  "DELETE FROM " . self::TABLE_NAME .
+                " WHERE " . self::COLUMN_PRODUCT_NAME . "=:product_name;";
+
+            $stmtHistory = $conn->prepare($sqlDeleteHistory);
+            $stmtHistory->bindParam(":product_id", $product->product_id);
+            $stmtHistory->execute();
+
+            $stmtProduct = $conn->prepare($sqlDeleteProduct);
+            $stmtProduct->bindParam(":product_name", $product->product_name);
+            $stmtProduct->execute();
+
+            $conn->commit();
+
+            return $product;
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            throw $e;
+        }
     }
     /**
      * Buscar um produto pelo id
@@ -117,7 +137,8 @@ class ProductModel extends Connection
         $conn = $this->connect();
 
         $sql =
-            "SELECT " . self::COLUMN_PRODUCT_NAME  . "," .
+            "SELECT " . self::COLUMN_PRODUCT_ID . "," . 
+            self::COLUMN_PRODUCT_NAME  . "," .
             self::COLUMN_PRODUCT_DESCRIPTION . "," .
             self::COLUMN_PRODUCT_NUMBER . "," .
             self::COLUMN_PRODUCT_IMAGE .
@@ -145,9 +166,9 @@ class ProductModel extends Connection
 
         $sql =
             "SELECT " . self::COLUMN_PRODUCT_ID . ","
-            . self::COLUMN_PRODUCT_NAME  . "," 
-            . self::COLUMN_PRODUCT_DESCRIPTION . "," 
-            . self::COLUMN_PRODUCT_NUMBER . "," 
+            . self::COLUMN_PRODUCT_NAME  . ","
+            . self::COLUMN_PRODUCT_DESCRIPTION . ","
+            . self::COLUMN_PRODUCT_NUMBER . ","
             . self::COLUMN_PRODUCT_IMAGE .
             " FROM " . self::TABLE_NAME .
             " WHERE " . self::COLUMN_PRODUCT_NUMBER . "=:product_number";
