@@ -31,6 +31,10 @@ class ProductModel extends Connection
     public const COLUMN_PRODUCT_DESCRIPTION = "product_description";
     public const COLUMN_PRODUCT_NUMBER = "product_number";
     public const COLUMN_PRODUCT_IMAGE = "product_image";
+
+    public const EXTRA_TABLE_HISTORY = "VotesHistory";
+    public const EXTRA_COLUMN_HISTORY_ID = "history_id";
+
     /**
      * Criar um novo produto
      * @param \App\Models\Product $product Objeto produto 
@@ -137,7 +141,7 @@ class ProductModel extends Connection
         $conn = $this->connect();
 
         $sql =
-            "SELECT " . self::COLUMN_PRODUCT_ID . "," . 
+            "SELECT " . self::COLUMN_PRODUCT_ID . "," .
             self::COLUMN_PRODUCT_NAME  . "," .
             self::COLUMN_PRODUCT_DESCRIPTION . "," .
             self::COLUMN_PRODUCT_NUMBER . "," .
@@ -196,7 +200,28 @@ class ProductModel extends Connection
             self::COLUMN_PRODUCT_IMAGE .
             " FROM " . self::TABLE_NAME;
 
-        $stmt = $conn->prepare($sql);
+        $sqlNew =
+            "SELECT COUNT(" . self::EXTRA_TABLE_HISTORY . "." . self::EXTRA_COLUMN_HISTORY_ID . ") AS votes," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NAME . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_DESCRIPTION . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NUMBER . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_IMAGE .  "," .
+            "CAST((COUNT" . "(".self::EXTRA_TABLE_HISTORY.".".self::EXTRA_COLUMN_HISTORY_ID.")"."* 100.0) / total_votes.total AS INT) AS percentage" .
+            " FROM " . self::TABLE_NAME .
+            " LEFT JOIN " . self::EXTRA_TABLE_HISTORY .
+            " ON " . self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "=" . self::EXTRA_TABLE_HISTORY . "." . self::COLUMN_PRODUCT_ID . 
+            " CROSS JOIN" .
+            " (SELECT COUNT(" . SELF::EXTRA_COLUMN_HISTORY_ID . ") AS total FROM ". self::EXTRA_TABLE_HISTORY .") AS total_votes " .
+            " GROUP BY " .
+             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "," .
+             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NAME . "," .
+             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_DESCRIPTION . "," .
+             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NUMBER . "," .
+             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_IMAGE 
+            ;
+
+        $stmt = $conn->prepare($sqlNew);
         $stmt->execute();
 
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);

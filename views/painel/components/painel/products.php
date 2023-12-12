@@ -15,6 +15,11 @@ foreach ($products as $product) {
             <h1><?php echo $product["product_name"] ?></h1>
             <br>
             <p><?php echo $product["product_description"] ?></p>
+
+            <p class="pt-2">VOTOS ATUALMENTE: <?php echo $product["votes"] ?></p>
+            <div class="mt-2 pt-1 progress-bar-vote" style="--vote-percentage: <?php echo $product["percentage"] ?>%">
+            </div>
+
         </section>
     </div>
 <?php

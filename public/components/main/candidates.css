@@ -46,6 +46,23 @@
     /* animation: expand-fadein 0.3s forwards; */
 }
 
+.progress-bar-vote {
+    background-color: rgb(216, 216, 216);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-vote::before {
+    content: "";
+    position: absolute;
+    width: var(--vote-percentage);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(49, 255, 49);
+}
+
 @keyframes expand-fadein {
     from {
         opacity: 0;
