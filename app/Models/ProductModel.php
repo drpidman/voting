@@ -207,7 +207,7 @@ class ProductModel extends Connection
             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_DESCRIPTION . "," .
             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NUMBER . "," .
             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_IMAGE .  "," .
-            "CAST((COUNT" . "(".self::EXTRA_TABLE_HISTORY.".".self::EXTRA_COLUMN_HISTORY_ID.")"."* 100.0) / total_votes.total AS INT) AS percentage" .
+            "ROUND((COUNT" . "(".self::EXTRA_TABLE_HISTORY.".".self::EXTRA_COLUMN_HISTORY_ID.")"."* 100.0) / total_votes.total) AS percentage" .
             " FROM " . self::TABLE_NAME .
             " LEFT JOIN " . self::EXTRA_TABLE_HISTORY .
             " ON " . self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "=" . self::EXTRA_TABLE_HISTORY . "." . self::COLUMN_PRODUCT_ID . 

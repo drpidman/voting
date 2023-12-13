@@ -4,7 +4,7 @@
             <section class="candidate-number">
                 <span id="candidate-number">1</span>
             </section>
-            <img id="candidate-image" src="https://www.nicepng.com/png/full/360-3607532_banana-png-images.png" alt="canditate">
+            <img id="candidate-image" src="<?php echo URL_SUBFOLDER ?>/public/source_images/bananas.jpg" alt="canditate">
         </div>
         <div class="card body pt-1">
             <h1 id="candidate-name">Banana</h1>

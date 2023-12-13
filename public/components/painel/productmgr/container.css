@@ -9,7 +9,10 @@
 
 .product-form form .form-item label>input {
     border: .1rem solid #aaaaaa;
-    outline-color: rgb(116, 116, 116);
+    outline: none;
+    background-color: #1d1d1d;
+    color: darkgray;
+    padding: 1.5rem;
 }
 
 .product-form form .form-item label>input[type="file"]::-webkit-file-upload-button {

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/common/all.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/painel/productmgr/container.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main/candidates.css">
+    <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main.css">
+
 
     <script>
         let action_allow_endpoint = "<?php echo $allowvote ?>";

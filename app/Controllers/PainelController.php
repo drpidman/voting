@@ -17,10 +17,8 @@ class PainelController implements Controller
 
         $product = new ProductModel();
 		$products = $product->getAll();
-
-        $user = $_SESSION['user'];
     
-        if (!isset($user)) {
+        if (!isset($_SESSION['user'])) {
             header('Location: ' . $homepage);
             return;
         }

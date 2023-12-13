@@ -1,21 +1,25 @@
 <section class="product-form">
     <!-- FORMULARIO -->
-    <form method="POST">
+    <h1>Formulario para liberação de cabine</h1>
+    <p class="mt-1">Essas informações serão usadas para permitir que 
+        votos sejam computados
+    </p>
+    <form class="mt-2" method="POST">
         <!-- METADADOS -->
         <section class="d-flex form-item md-col md-w100">
-            <label>
+            <label class="mt-1 w-100">
                 Nome:
-                <input name="first_name" type="text" placeholder="Nome" required>
+                <input class="mt-1 w-100" name="first_name" type="text" placeholder="Nome" required>
             </label>
-            <label>
+            <label class="mt-1 w-100">
                 Sobrenome:
-                <input name="second_name" type="text" placeholder="Sobrenome" required>
+                <input class="mt-1" name="second_name" type="text" placeholder="Sobrenome" required>
             </label>
         </section>
-        <section class="d-flex form-item md-col pt-1 w-100">
+        <section class="d-flex form-item md-col pt-1 w-100 mt-2">
             <label class="w-100">
                 CPF:
-                <input class="w-100" name="cpf" type="telephone" placeholder="000.000.000-00" required oninput="formatCpf(this)">
+                <input class="w-100 mt-1" name="cpf" type="telephone" placeholder="000.000.000-00" required oninput="formatCpf(this)">
             </label>
         </section>
         <!-- ACTION - CONFIRMAR -->

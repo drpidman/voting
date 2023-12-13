@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/common/all.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/painel/productmgr/container.css">
     <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main/candidates.css">
+    <link rel="stylesheet" href="<?php echo URL_SUBFOLDER ?>/public/components/main.css">
+
 
     <title>Painel</title>
 
@@ -24,7 +26,7 @@
     ?>
 
     <main class="d-flex col justify-center align-center pt-3">
-        <section class="product d-flex row w-50 md-w100 md-col">
+        <section class="product d-flex row w-70 md-w100 md-col">
             <!-- ADICIONAR PRODUTO -->
             <?php
             require_once "components/painel/form.php"
