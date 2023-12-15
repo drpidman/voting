@@ -105,11 +105,10 @@ async function postProduct(ev) {
 
 
 async function generateProductRelatory() {
-    const printableWindow = window.open();
-
     await fetch(action_getall_endpoit)
     .then(async (res) => {
         const products = await res.json();
+        const printableWindow = window.open();
 
         products.map((product) => {
             printableWindow.document.write(`
@@ -137,12 +136,11 @@ async function generateProductRelatory() {
 
 
 async function generateVotesRelatory() {
-    const printableWindow = window.open();
-
     await fetch(action_getall_voteshistory)
     .then(async (res) => {
         const votesHistories = await res.json();
-
+        const printableWindow = window.open();
+        
         votesHistories.map((history) => {
             printableWindow.document.write(`
             <head>
