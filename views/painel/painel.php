@@ -17,6 +17,8 @@
     <script>
         let action_post_endpoint = "<?php echo $addproduct ?>";
         let action_delete_endpoint = "<?php echo $deleteproduct ?>";
+        let action_getall_endpoit = "<?php echo $productsEndpoint ?>";
+        let action_getall_voteshistory = "<?php echo $historiesEndpoint ?>"
     </script>
 </head>
 
@@ -26,7 +28,20 @@
     ?>
 
     <main class="d-flex col justify-center align-center pt-3">
-        <section class="product d-flex row w-70 md-w100 md-col">
+
+        <section class="d-flex row w-70 md-w100 md-col">
+            <a class="m-1" href=<?php echo $votecontrol ?>>
+                <button class="small-btn bd-green">Controle de cabine</button>
+            </a>
+            <a class="m-1">
+                <button onclick="generateProductRelatory()" class="small-btn bd-green">Produtos: relatorio</button>
+            </a>
+            <a class="m-1">
+                <button onclick="generateVotesRelatory()" class="small-btn bd-green">Votos: historico</button>
+            </a>
+        </section>
+
+        <section class="product d-flex row w-70 md-w100 md-col mt-2">
             <!-- ADICIONAR PRODUTO -->
             <?php
             require_once "components/painel/form.php"

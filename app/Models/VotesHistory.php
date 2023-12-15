@@ -25,7 +25,18 @@ class VotesHistory extends Connection
     public const COLUMN_HISTORY_ID = "history_id";
     public const COLUMN_PRODUCT_ID = "product_id";
     public const COLUMN_USER_ID = "user_id";
+    public const COLUMN_VOTED_AT = "votedAt";
+
     public const EXTRACOLUMN_VOTES_TIME = "votes_time";
+
+    public const EXTRA_TABLE_PRODUCTS = "Products";
+    public const EXTRA_COLUMN_PRODUCT_ID = "product_id";
+    public const EXTRA_COLUMN_PRODUCT_NAME = "product_name";
+
+    public const EXTRA_TABLE_USER = "Users";
+    public const EXTRA_COLUMN_USER_ID = "user_id";
+    public const EXTRA_COLUMN_USER_NAME = "user_name";
+
     /**
      * Criar novo historico
      * @param History $history
@@ -68,5 +79,24 @@ class VotesHistory extends Connection
         $votes_time = $stmt->fetch(PDO::FETCH_OBJ);
 
         return $votes_time;
+    }
+
+    public function getAll()
+    {
+        $conn = $this->connect();
+        $stmt = $conn->prepare(
+            "SELECT " . self::EXTRA_TABLE_PRODUCTS . "." . self::EXTRA_COLUMN_PRODUCT_NAME . "," .
+                self::EXTRA_TABLE_USER . "." . self::EXTRA_COLUMN_USER_NAME . "," .
+                self::TABLE_NAME . "." . self::COLUMN_VOTED_AT .
+                " FROM " . self::TABLE_NAME .
+                " INNER JOIN " . self::EXTRA_TABLE_PRODUCTS .
+                " ON " . self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "=" . self::EXTRA_TABLE_PRODUCTS . "." . self::EXTRA_COLUMN_PRODUCT_ID . 
+                " INNER JOIN " . self::EXTRA_TABLE_USER .
+                " ON " . self::TABLE_NAME . "." . self::COLUMN_USER_ID . "=" . self::EXTRA_TABLE_USER . "." . self::EXTRA_COLUMN_USER_ID
+        );
+
+        $stmt->execute();
+        $histories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $histories;
     }
 }

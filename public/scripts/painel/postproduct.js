@@ -103,6 +103,71 @@ async function postProduct(ev) {
     })
 }
 
+
+async function generateProductRelatory() {
+    const printableWindow = window.open();
+
+    await fetch(action_getall_endpoit)
+    .then(async (res) => {
+        const products = await res.json();
+
+        products.map((product) => {
+            printableWindow.document.write(`
+            <head>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+                    body {
+                        font-family: 'Josefin Sans', sans-serif !important;
+                    }
+                </style>
+            </head>
+            <div style="padding: .5rem 1.5rem; border: 0.5px solid darkgray; margin: 0.5rem; border-radius: 0.5rem;">
+                <h3>Nome do produto: ${product.product_name}</h3>
+                <p>Numero do produto: ${product.product_number}</p>
+                <p>Descrição do produto: ${product.product_description}</p>
+                <p>N. de votos: ${product.votes}</p>
+            </div>
+            `)
+        })
+
+        printableWindow.print()
+        printableWindow.close()
+    })
+}
+
+
+async function generateVotesRelatory() {
+    const printableWindow = window.open();
+
+    await fetch(action_getall_voteshistory)
+    .then(async (res) => {
+        const votesHistories = await res.json();
+
+        votesHistories.map((history) => {
+            printableWindow.document.write(`
+            <head>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+                    body {
+                        font-family: 'Josefin Sans', sans-serif !important;
+                    }
+                </style>
+            </head>
+            <div style="padding: .5rem 1.5rem; border: 0.5px solid darkgray; margin: 0.5rem; border-radius: 0.5rem;">
+                <h3>Nome do produto votado: ${history.product_name}</h3>
+                <p>Usuario: ${history.user_name}</p>
+                <p>Votou em: ${history.votedAt}</p>
+            </div>
+            `)
+        })
+
+        printableWindow.print()
+        printableWindow.close()
+
+        console.log(votesHistories)
+    })
+}
+
 document.getElementById("post-product").addEventListener('click', postProduct);
 inputs.product_name.addEventListener('input', productTextValueChange);
 inputs.product_description.addEventListener('input', productTextValueChange);

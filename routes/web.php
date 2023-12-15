@@ -19,5 +19,8 @@ $routes->add('painel-user-get', new Route(constant('URL_SUBFOLDER') . '/painel/u
 
 $routes->add('painel-post-product', new Route(constant('URL_SUBFOLDER') . '/painel/add-product', array('controller' => 'ProductController', 'method' => 'postProduct'), array()));
 $routes->add('painel-delete-product', new Route(constant('URL_SUBFOLDER') . '/painel/delete-product', array('controller' => 'ProductController', 'method' => 'deleteProduct'), array()));
+$routes->add('painel-get-products', new Route(constant('URL_SUBFOLDER') . '/painel/getproducts', array('controller' => 'ProductController', 'method' => 'getProducts'), array()));
+$routes->add('painel-get-vote-history', new Route(constant('URL_SUBFOLDER') . '/painel/getvote-history', array('controller' => 'ProductController', 'method' => 'getVotesHistory'), array()));
+
 
 $routes->add('auth', new Route(constant('URL_SUBFOLDER') . '/auth', array('controller' => 'LoginController', 'method' => 'load'), array()));

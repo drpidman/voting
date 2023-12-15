@@ -11,9 +11,11 @@ class PainelController implements Controller
 	public function load(RouteCollection $routes)
 	{
         $homepage = $routes->get('homepage')->getPath();
-
+        $votecontrol = $routes->get('painel-vote-control')->getPath();
         $addproduct = $routes->get('painel-post-product')->getPath();
         $deleteproduct = $routes->get('painel-delete-product')->getPath();
+        $productsEndpoint = $routes->get('painel-get-products')->getPath();
+        $historiesEndpoint = $routes->get('painel-get-vote-history')->getPath();
 
         $product = new ProductModel();
 		$products = $product->getAll();

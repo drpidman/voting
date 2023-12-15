@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\AdminUser;
 use App\Models\Product;
 use App\Models\ProductModel;
+use App\Models\VotesHistory;
 use Symfony\Component\Routing\RouteCollection;
 
 session_start();
@@ -110,5 +111,11 @@ class ProductController
         $products = new ProductModel();
 
         echo json_encode($products->getAll());
+    }
+
+    public function getVotesHistory(RouteCollection $routes) 
+    {
+        $histories = new VotesHistory();
+        echo json_encode($histories->getAll());
     }
 }
