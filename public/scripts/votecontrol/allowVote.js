@@ -14,17 +14,17 @@ async function allowVote(e) {
         return;
     }
 
-    if (!validateCpf(inputs.cpf.value)) {
-        allowVoteButton.innerText = "CPF Invalido"
-        allowVoteButton.style.backgroundColor = "#EF6F6C";
+    // if (!validateCpf(inputs.cpf.value)) {
+    //     allowVoteButton.innerText = "CPF Invalido"
+    //     allowVoteButton.style.backgroundColor = "#EF6F6C";
 
-        setTimeout(() => {
-            allowVoteButton.innerText = "Liberar cabine"
-            allowVoteButton.style.backgroundColor = "";
-        }, 3000)
+    //     setTimeout(() => {
+    //         allowVoteButton.innerText = "Liberar cabine"
+    //         allowVoteButton.style.backgroundColor = "";
+    //     }, 3000)
 
-        return;
-    }
+    //     return;
+    // }
 
     let allowForm = new FormData();
     allowForm.append("user_name", inputs.first_name.value)
@@ -72,7 +72,7 @@ async function allowVote(e) {
             vote_status.innerHTML += `
                     <h1 style="font-size: 2rem">Agurdando voto</h1>
                     <p>Usuario: ${data.user_name}</p>
-                    <p>CPF: ${data.user_cpf}</p>
+                    <p>N. Telefone: ${data.user_cpf}</p>
                 `
 
             socket.send(JSON.stringify({

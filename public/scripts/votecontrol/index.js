@@ -139,7 +139,7 @@ window.onload = function () {
             vote_status.innerHTML = `
                     <h1 style="font-size: 2rem">Agurdando voto</h1>
                     <p>Usuario: ${data.status_username}</p>
-                    <p>CPF: ${data.status_usercpf}</p>
+                    <p>N. Telefone: ${data.status_usercpf}</p>
                 `
 
             socket.send(JSON.stringify({

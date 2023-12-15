@@ -22,7 +22,7 @@ socket.onmessage = function (e) {
                 <span>Nome: ${data.user.name}</span>
         </div>
         <div class="container d-flex row">
-                <span id="user-query-cpf">CPF: ${data.user.cpf}</span>
+                <span id="user-query-cpf">N. Telefone: ${data.user.cpf}</span>
         </div>
         `;
 
@@ -61,7 +61,7 @@ async function voteClick(e) {
                     <span>Nome: ${data.status_username}</span>
             </div>
             <div class="container d-flex row">
-                    <span>CPF: ${data.status_usercpf}</span>
+                    <span>N. Telefone:: ${data.status_usercpf}</span>
             </div>
             `;
 
@@ -114,7 +114,7 @@ window.onload = function () {
                         <span>Nome: ${data.status_username}</span>
                 </div>
                 <div class="container d-flex row">
-                        <span>CPF: ${data.status_usercpf}</span>
+                        <span>N. Telefone: ${data.status_usercpf}</span>
                 </div>
                 `;
         }

@@ -18,8 +18,8 @@
         </section>
         <section class="d-flex form-item md-col pt-1 w-100 mt-2">
             <label class="w-100">
-                CPF:
-                <input class="w-100 mt-1" name="cpf" type="telephone" placeholder="000.000.000-00" required oninput="formatCpf(this)">
+                N. Telefone:
+                <input class="w-100 mt-1" name="cpf" type="telephone" placeholder="00000000000" required>
             </label>
         </section>
         <!-- ACTION - CONFIRMAR -->
