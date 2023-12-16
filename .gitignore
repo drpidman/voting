@@ -1,0 +1,6 @@
+/public/images/
+composer.lock
+package.lock.json
+
+.vscode
+.github

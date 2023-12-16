@@ -1,0 +1,7 @@
+.footer-vote-status {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    backdrop-filter: blur(15px);
+}
