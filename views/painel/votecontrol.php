@@ -19,6 +19,7 @@
 
         let voteStatus = "<?php echo $routes->get('painel-status-get')->getPath(); ?>";
         let updateVoteStatus = "<?php echo $routes->get('painel-status-update')->getPath(); ?>";
+        let updateVoteStatusErase = "<?php echo $statusUpdateErase ?>";
 
 
         let host = "ws://<?php echo $_SERVER['SERVER_ADDR'] ?>:8090";
@@ -35,7 +36,20 @@
     </section>
 
     <main class="d-flex col justify-center align-center pt-3">
-        <section class="d-flex row w-100 align-center justify-center">
+        <section class="d-flex row w-100 md-w100 md-col justify-center">
+            <a class="m-1" href="<?php echo $votecontrollerPage ?>">
+                <button class="small-btn bd-green">Página anterior</button>
+            </a>
+        
+            <a class="m-1">
+                <button onclick="votingStatusClean(event)" class="small-btn bd-green">Limpar cabine</button>
+            </a>
+            <a class="m-1">
+                <button onclick="votingReloadPage(event)" class="small-btn bd-green">Recarregar cabine</button>
+            </a>
+        </section>
+
+        <section class="d-flex row w-100 align-center justify-center pt-1">
             <?php
             require_once "components/votecontrol/form.php"
             ?>

@@ -27,6 +27,10 @@ socket.onmessage = function (e) {
         `;
 
         // window.location.reload();
+    } else if (data.type == "erase-vote") {
+        window.location.reload()
+    } else if (data.type == "request-reload") {
+        window.location.reload()
     }
 }
 
@@ -52,8 +56,9 @@ async function voteClickNew(e) {
 
         vote_status.innerHTML = `
                 <h1 style="font-size: 2rem">Ocorreu um erro</h1>
-                <h1 class="mt-1" style="text-align: center">Motivo: O numero digitado não corresponde a nenhum item existente no sistema.
-                Por favor, confirme o numero escolhido e questione a existencia do mesmo a quem liberou o voto.
+                <h1 class="mt-1" style="text-align: center">Motivo: 
+                O número que você digitou não corresponde a nenhum item no sistema.
+                Por favor, verifique o número que escolheu e pergunte à pessoa que concedeu o voto sobre sua existência.
                 </h1>
             `
 
@@ -62,7 +67,7 @@ async function voteClickNew(e) {
             vote_status.style.backgroundColor = "";
             document.body.style.overflow = "";
             vote_status.innerHTML = "";
-        }, 6000)
+        }, 6900)
         return;
     }
 
@@ -78,7 +83,7 @@ async function voteClickNew(e) {
         if (data != null && data.status) {
             vote_status.innerHTML = `
             <h1 style="font-size: 2rem;">Aguarde!</h1>
-            <p style="text-align: center" style="font-size: 1.5rem">Por favor, aguarde, vamos verificar se você possui mais votos disponiveis</p>`
+            <p style="text-align: center" style="font-size: 1.5rem">Por favor, espere um momento! Vamos checar se você pode votar mais vezes.</p>`
 
             vote_status.style.animation = "expand-fadein 0.3s forwards";
             document.body.style.overflow = "hidden";

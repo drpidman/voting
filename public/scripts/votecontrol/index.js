@@ -1,5 +1,7 @@
 let socket = new WebSocket(host);
 
+console.log(socket)
+
 socket.onerror = function (err) {
     console.log("Error", err);
 }
@@ -32,6 +34,8 @@ socket.onmessage = async function (e) {
                 }, 4000)
             }
         })
+    } else if (data.type == "erase-vote") {
+        window.location.reload();
     }
 }
 
@@ -140,6 +144,10 @@ window.onload = function () {
                     <h1 style="font-size: 2rem">Agurdando voto</h1>
                     <p>Usuario: ${data.status_username}</p>
                     <p>N. Telefone: ${data.status_usercpf}</p>
+
+                    <a class="m-1">
+                    <button onclick="votingStatusClean(event)" class="small-btn bd-green bg-black">Limpar cabine</button>
+                    </a>
                 `
 
             socket.send(JSON.stringify({

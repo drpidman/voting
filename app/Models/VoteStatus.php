@@ -28,10 +28,11 @@ class VoteStatusModel extends Connection
     public const EXTRA_COLUMN_STATUS_NAME = "status_username";
     public const EXTRA_COLUMN_STATUS_CPF = "status_usercpf";
 
-    public function getStatus(int $id) {
+    public function getStatus(int $id)
+    {
         $conn = $this->connect();
 
-        $sql = "SELECT " . self::COLUMN_STATUS 
+        $sql = "SELECT " . self::COLUMN_STATUS
             . " FROM " . self::TABLE_NAME
             . " WHERE " . self::COLUMN_STATUS_ID . "=:status_id";
 
@@ -85,6 +86,27 @@ class VoteStatusModel extends Connection
         }
 
         $stmt->bindParam(':id', $id);
+
+        $stmt->execute();
+
+        return $this->getStatusAll($id);
+    }
+
+    public function updateStatusErase(int $id, bool $status)
+    {
+        $conn = $this->connect();
+
+        $sql = "UPDATE " . self::TABLE_NAME . " SET "
+            . self::COLUMN_STATUS . "=:status,"
+            . self::COLUMN_USER_ID . "=:userid" .
+            " WHERE " . self::COLUMN_STATUS_ID . "=:id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':status', $status, PDO::PARAM_BOOL);
+        $stmt->bindValue(':userid', null, PDO::PARAM_NULL);
+
+        $stmt->bindParam(':id', $id);
+
 
         $stmt->execute();
 

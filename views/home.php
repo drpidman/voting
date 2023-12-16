@@ -31,7 +31,6 @@
         .numeric-keyboard button {
             padding: 15px;
             font-size: 18px;
-            background-color: #fff;
             cursor: pointer;
         }
 

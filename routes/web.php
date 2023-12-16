@@ -15,6 +15,7 @@ $routes->add('painel-vote-control-vote', new Route(constant('URL_SUBFOLDER') . '
 
 $routes->add('painel-status-get', new Route(constant('URL_SUBFOLDER') . '/painel/vote-status', array('controller' => 'PainelVoteController', 'method' => 'getVoteStatus'), array()));
 $routes->add('painel-status-update', new Route(constant('URL_SUBFOLDER') . '/painel/vote-status/update', array('controller' => 'PainelVoteController', 'method' => 'updateVoteStatus'), array()));
+$routes->add('painel-status-update-erase', new Route(constant('URL_SUBFOLDER') . '/painel/vote-status/update/erase', array('controller' => 'PainelVoteController', 'method' => 'eraseVoteStatus'), array()));
 $routes->add('painel-user-get', new Route(constant('URL_SUBFOLDER') . '/painel/user', array('controller' => 'PainelVoteController', 'method' => 'getUser'), array()));
 
 $routes->add('painel-post-product', new Route(constant('URL_SUBFOLDER') . '/painel/add-product', array('controller' => 'ProductController', 'method' => 'postProduct'), array()));

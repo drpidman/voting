@@ -1,3 +1,33 @@
+
+async function votingStatusClean(e) {
+    e.preventDefault()
+
+    let statusForm = new FormData();
+    statusForm.append("id", 12);
+
+    await fetch(updateVoteStatusErase, {
+        method: "POST",
+        body: statusForm
+    }).then(async (res) => {
+        console.log(await res.text());
+
+        if (res.ok) {
+            socket.send(JSON.stringify({
+                type: "erase-vote"
+            }));
+
+            window.location.reload()    
+        }
+    })
+}
+
+async function votingReloadPage(e) {
+
+    socket.send(JSON.stringify({
+        type: "request-reload"
+    }))
+}
+
 /**
  * @param {MouseEvent} e 
  */
@@ -64,7 +94,7 @@ async function allowVote(e) {
 
         if (res.ok) {
             const data = await res.json();
-            
+
             console.log(data)
             vote_status.style.animation = "expand-fadein 0.3s forwards";
             document.body.style.overflow = "hidden";
@@ -73,7 +103,17 @@ async function allowVote(e) {
                     <h1 style="font-size: 2rem">Agurdando voto</h1>
                     <p>Usuario: ${data.user_name}</p>
                     <p>N. Telefone: ${data.user_cpf}</p>
+                    <a class="m-1">
+                    <button onclick="votingStatusClean(event)" class="small-btn bd-green bg-black">Limpar cabine</button>
+                    </a>
                 `
+
+            await fetch(updateVoteStatus, {
+                method: "POST",
+                body: statusForm
+            }).then(async (res) => {
+                console.log(await res.text());
+            })
 
             socket.send(JSON.stringify({
                 type: "allow-vote",
@@ -82,16 +122,7 @@ async function allowVote(e) {
                     cpf: data.user_cpf
                 }
             }));
-            
-            await fetch(updateVoteStatus, {
-                method: "POST",
-                body: statusForm
-            }).then(async (res) => {
-                console.log(await res.text());
-            })
 
         }
     })
-
-
 } 

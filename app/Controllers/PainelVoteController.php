@@ -18,7 +18,10 @@ class PainelVoteController implements Controller
     public function load(RouteCollection $routes)
     {
         $homepage = $routes->get('homepage')->getPath();
+        $votecontrollerPage = $routes->get('painel')->getPath();
         $allowvote = $routes->get('painel-vote-control-allow')->getPath();
+        $statusUpdateErase = $routes->get('painel-status-update-erase')->getPath();
+
         /**
          * Rotas com user_session requerem que as requisições sejam autenticadas, isso é:
          * Usuario administrador fez login.
@@ -191,5 +194,24 @@ class PainelVoteController implements Controller
 
 
         echo json_encode($status->updateStatus($id, $vote_status, $userModel->getByCpf($cpf)->user_id));
+    }
+
+    public function eraseVoteStatus(RouteCollection $routes) {
+        if (!isset($_POST['id'])) {
+            http_response_code(401);
+            return;
+        }
+
+        $user_session = $_SESSION['user'];
+
+        if (!isset($user_session)) {
+            http_response_code(401);
+            return;
+        }
+
+        $id = $_POST['id'];
+
+        $status = new VoteStatusModel();
+        echo json_encode($status->updateStatusErase($id, false));
     }
 }

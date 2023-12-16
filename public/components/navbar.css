@@ -14,7 +14,7 @@
 }
 
 .navbar .nav-item.nav-image img {
-    width: 300px;
+    width: 380px;
     height: 90px;
     object-fit: cover;
 }
@@ -26,7 +26,7 @@
     }
 
     .navbar .nav-item.nav-image img {
-        width: 170px;
+        width: 210px;
         height: 40px;
         object-fit: cover;
     }
