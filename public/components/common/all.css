@@ -45,6 +45,10 @@
     justify-content: flex-end;
 }
 
+.align-start {
+    align-items: flex-start;
+}
+
 .align-center {
     align-items: center;
 }
@@ -101,6 +105,9 @@
     margin-top: 2rem !important;
 }
 
+.w-30 {
+    width: 30% !important;
+}
 
 
 .w-50 {

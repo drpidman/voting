@@ -86,8 +86,10 @@ class ProductModel extends Connection
 
             $sqlDeleteHistory = "DELETE FROM " . VotesHistory::TABLE_NAME .
                 " WHERE " . VotesHistory::COLUMN_PRODUCT_ID .  "=:product_id;";
+
             $sqlDeleteProduct =  "DELETE FROM " . self::TABLE_NAME .
                 " WHERE " . self::COLUMN_PRODUCT_NAME . "=:product_name;";
+
 
             $stmtHistory = $conn->prepare($sqlDeleteHistory);
             $stmtHistory->bindParam(":product_id", $product->product_id);
@@ -207,19 +209,18 @@ class ProductModel extends Connection
             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_DESCRIPTION . "," .
             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NUMBER . "," .
             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_IMAGE .  "," .
-            "ROUND((COUNT" . "(".self::EXTRA_TABLE_HISTORY.".".self::EXTRA_COLUMN_HISTORY_ID.")"."* 100.0) / total_votes.total) AS percentage" .
+            "ROUND((COUNT" . "(" . self::EXTRA_TABLE_HISTORY . "." . self::EXTRA_COLUMN_HISTORY_ID . ")" . "* 100.0) / total_votes.total) AS percentage" .
             " FROM " . self::TABLE_NAME .
             " LEFT JOIN " . self::EXTRA_TABLE_HISTORY .
-            " ON " . self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "=" . self::EXTRA_TABLE_HISTORY . "." . self::COLUMN_PRODUCT_ID . 
+            " ON " . self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "=" . self::EXTRA_TABLE_HISTORY . "." . self::COLUMN_PRODUCT_ID .
             " CROSS JOIN" .
-            " (SELECT COUNT(" . SELF::EXTRA_COLUMN_HISTORY_ID . ") AS total FROM ". self::EXTRA_TABLE_HISTORY .") AS total_votes " .
+            " (SELECT COUNT(" . SELF::EXTRA_COLUMN_HISTORY_ID . ") AS total FROM " . self::EXTRA_TABLE_HISTORY . ") AS total_votes " .
             " GROUP BY " .
-             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "," .
-             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NAME . "," .
-             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_DESCRIPTION . "," .
-             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NUMBER . "," .
-             self::TABLE_NAME . "." . self::COLUMN_PRODUCT_IMAGE 
-            ;
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_ID . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NAME . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_DESCRIPTION . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_NUMBER . "," .
+            self::TABLE_NAME . "." . self::COLUMN_PRODUCT_IMAGE;
 
         $stmt = $conn->prepare($sqlNew);
         $stmt->execute();

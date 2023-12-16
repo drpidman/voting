@@ -36,20 +36,27 @@
     </section>
 
     <main class="d-flex col justify-center align-center pt-3">
-        <section class="d-flex row w-100 md-w100 md-col justify-center">
-            <a class="m-1" href="<?php echo $votecontrollerPage ?>">
-                <button class="small-btn bd-green">Página anterior</button>
-            </a>
-        
-            <a class="m-1">
-                <button onclick="votingStatusClean(event)" class="small-btn bd-green">Limpar cabine</button>
-            </a>
-            <a class="m-1">
-                <button onclick="votingReloadPage(event)" class="small-btn bd-green">Recarregar cabine</button>
-            </a>
+        <section class="d-flex col w-100 md-w100 md-col justify-center align-center">
+            <div class="d-flex col w-30 justify-center align-start">
+                <h1>Ferramentas preventivas contra falhas</h1>
+                <p class="mt-1">Limpar cabine: Limpar o status de voto ou remover o usuário que abriu um voto</p>
+                <p class="mt-1">Recarregar cabine: Se caso a página da cabine travar, recarregue a mesma com esta função</p>
+            </div>
+            <div class="d-flex row justify-center mt-1">
+                <a class="m-1" href="<?php echo $votecontrollerPage ?>">
+                    <button class="small-btn bd-green">Página anterior</button>
+                </a>
+
+                <a class="m-1">
+                    <button onclick="votingStatusClean(event)" class="small-btn bd-green">Limpar cabine</button>
+                </a>
+                <a class="m-1">
+                    <button onclick="votingReloadPage(event)" class="small-btn bd-green">Recarregar cabine</button>
+                </a>
+            </div>
         </section>
 
-        <section class="d-flex row w-100 align-center justify-center pt-1">
+        <section class="d-flex row w-100 align-center justify-center pt-1 mt-2">
             <?php
             require_once "components/votecontrol/form.php"
             ?>

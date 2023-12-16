@@ -101,6 +101,8 @@ async function postProduct(ev) {
             this.innerText = "confirmar"
         }, 2000)
     })
+
+    window.location.reload()
 }
 
 
